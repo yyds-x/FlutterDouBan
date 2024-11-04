@@ -1,18 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:doubanapp/widgets/search_text_field_widget.dart';
-import 'package:doubanapp/http/API.dart';
 import 'package:doubanapp/bean/search_result_entity.dart';
+import 'package:doubanapp/http/API.dart';
 //import 'package:doubanapp/widgets/image/cached_network_image.dart';
 import 'package:doubanapp/router.dart';
+import 'package:doubanapp/widgets/search_text_field_widget.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 ///搜索
 class SearchPage extends StatefulWidget {
   final String searchHintContent;
 
   ///搜索框中的默认显示内容
-  SearchPage({Key key, this.searchHintContent = '用一部电影来形容你的2018'})
-      : super(key: key);
+  SearchPage({Key? key, this.searchHintContent = '用一部电影来形容你的2018'}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SearchPageState();
@@ -20,7 +19,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final API _api = API();
-  SearchResultEntity _searchResultEntity;
+  SearchResultEntity? _searchResultEntity;
   var imgW;
   var imgH;
   bool showLoading = false;
@@ -31,9 +30,8 @@ class _SearchPageState extends State<SearchPage> {
       imgW = MediaQuery.of(context).size.width / 7;
       imgH = imgW / 0.75;
     }
-    if (_searchResultEntity != null &&
-        _searchResultEntity.subjects.isNotEmpty) {
-      _searchResultEntity.subjects.sort((a, b) => (b.year.compareTo(a.year)));
+    if (_searchResultEntity != null && _searchResultEntity!.subjects.isNotEmpty) {
+      _searchResultEntity!.subjects.sort((a, b) => (b.year.compareTo(a.year)));
     }
     return Scaffold(
       body: SafeArea(
@@ -49,21 +47,19 @@ class _SearchPageState extends State<SearchPage> {
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
-                              SearchResultSubject bean =
-                                  _searchResultEntity.subjects[index];
+                              SearchResultSubject bean = _searchResultEntity!.subjects[index];
                               return Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
                                   child: _getItem(bean, index),
                                   onTap: () {
-                                    MyRouter.push(
-                                        context, MyRouter.detailPage, bean.id);
+                                    MyRouter.push(context, MyRouter.detailPage, bean.id);
                                   },
                                 ),
                               );
                             },
-                            itemCount: _searchResultEntity.subjects.length,
+                            itemCount: _searchResultEntity!.subjects.length,
                           ),
                         )
                       ],
@@ -105,8 +101,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget getSearchWidget() {
     return Padding(
-      padding:
-          EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0, bottom: 20.0),
+      padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0, bottom: 20.0),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -153,8 +148,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           clipBehavior: Clip.antiAlias,
           elevation: 5.0,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
         ),
         Padding(
           padding: EdgeInsets.all(5.0),
@@ -167,8 +161,7 @@ class _SearchPageState extends State<SearchPage> {
                 getType(bean.subtype),
                 style: getStyle(Colors.grey, 12.0),
               ),
-              Text(bean.title + '(${bean.year})',
-                  style: getStyle(Colors.black, 15.0, bold: true)),
+              Text(bean.title + '(${bean.year})', style: getStyle(Colors.black, 15.0, bold: true)),
               Text(
                   '${bean.rating.average} 分 / ${listConvertString(bean.pubdates)} / ${listConvertString(bean.genres)} / ${listConvertString2(bean.directors)}',
                   style: getStyle(Colors.grey, 13.0))
@@ -180,9 +173,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   TextStyle getStyle(Color color, double fontSize, {bool bold = false}) {
-    return TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: bold ? FontWeight.bold : FontWeight.normal);
+    return TextStyle(color: color, fontSize: fontSize, fontWeight: bold ? FontWeight.bold : FontWeight.normal);
   }
 }

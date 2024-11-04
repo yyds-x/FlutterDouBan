@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:doubanapp/constant/constant.dart';
 import 'package:doubanapp/pages/container_page.dart';
 import 'package:doubanapp/util/screen_utils.dart';
-import 'package:doubanapp/constant/constant.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
+
 ///打开APP首页
 class SplashWidget extends StatefulWidget {
   @override
@@ -38,8 +38,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                       CircleAvatar(
                         radius: ScreenUtils.screenW(context) / 3,
                         backgroundColor: Colors.white,
-                        backgroundImage:
-                        AssetImage(Constant.ASSETS_IMG + 'home.png'),
+                        backgroundImage: AssetImage(Constant.ASSETS_IMG + 'home.png'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
@@ -53,54 +52,47 @@ class _SplashWidgetState extends State<SplashWidget> {
                 ),
                 SafeArea(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment(1.0, 0.0),
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 30.0, top: 20.0),
-                            padding: const EdgeInsets.only(
-                                left: 10.0, right: 10.0, top: 2.0, bottom: 2.0),
-                            child: CountDownWidget(
-                              onCountDownFinishCallBack: (bool value) {
-                                if (value) {
-                                  setState(() {
-                                    showAd = false;
-                                  });
-                                }
-                              },
-                            ),
-                            decoration: BoxDecoration(
-                                color: Color(0xffEDEDED),
-                                borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0))),
-                          ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment(1.0, 0.0),
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 30.0, top: 20.0),
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 2.0, bottom: 2.0),
+                        child: CountDownWidget(
+                          onCountDownFinishCallBack: (bool value) {
+                            if (value) {
+                              setState(() {
+                                showAd = false;
+                              });
+                            }
+                          },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 40.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Image.asset(
-                                Constant.ASSETS_IMG + 'ic_launcher.png',
-                                width: 50.0,
-                                height: 50.0,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
-                                child: Text(
-                                  'Hi,豆芽',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )
-                            ],
+                        decoration: BoxDecoration(color: Color(0xffEDEDED), borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset(
+                            Constant.ASSETS_IMG + 'ic_launcher.png',
+                            width: 50.0,
+                            height: 50.0,
                           ),
-                        )
-                      ],
-                    ))
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              'Hi,豆芽',
+                              style: TextStyle(color: Colors.green, fontSize: 30.0, fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ))
               ],
             ),
             width: ScreenUtils.screenW(context),
@@ -116,8 +108,7 @@ class _SplashWidgetState extends State<SplashWidget> {
 class CountDownWidget extends StatefulWidget {
   final onCountDownFinishCallBack;
 
-  CountDownWidget({Key key, @required this.onCountDownFinishCallBack})
-      : super(key: key);
+  CountDownWidget({Key? key, required this.onCountDownFinishCallBack}) : super(key: key);
 
   @override
   _CountDownWidgetState createState() => _CountDownWidgetState();
@@ -125,7 +116,7 @@ class CountDownWidget extends StatefulWidget {
 
 class _CountDownWidgetState extends State<CountDownWidget> {
   var _seconds = 6;
-  Timer _timer;
+  late Timer _timer;
 
   @override
   void initState() {

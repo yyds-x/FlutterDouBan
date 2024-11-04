@@ -1,29 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:doubanapp/pages/movie/title_widget.dart';
-import 'package:doubanapp/pages/movie/today_play_movie_widget.dart';
+import 'package:doubanapp/bean/subject_entity.dart';
+import 'package:doubanapp/constant/color_constant.dart';
 import 'package:doubanapp/http/API.dart';
 import 'package:doubanapp/pages/movie/hot_soon_tab_bar.dart';
-import 'package:doubanapp/widgets/item_count_title.dart';
-import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
-import 'package:doubanapp/bean/subject_entity.dart';
-import 'package:doubanapp/bean/top_item_bean.dart';
-import 'package:doubanapp/widgets/rating_bar.dart';
-import 'package:doubanapp/constant/color_constant.dart';
-import 'dart:math' as math;
-import 'package:doubanapp/widgets/image/cache_img_radius.dart';
-import 'package:doubanapp/constant/constant.dart';
-import 'package:doubanapp/pages/movie/top_item_widget.dart';
+import 'package:doubanapp/pages/movie/title_widget.dart';
 import 'package:doubanapp/router.dart';
-import 'package:doubanapp/http/http_request.dart';
-//import 'package:palette_generator/palette_generator.dart';
-import 'package:flutter/rendering.dart';
-import 'package:doubanapp/repository/movie_repository.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:doubanapp/widgets/loading_widget.dart';
 import 'package:doubanapp/widgets/image/LaminatedImage.dart';
+import 'package:doubanapp/widgets/rating_bar.dart';
+import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:doubanapp/constant/text_size_constant.dart';
-import 'package:doubanapp/constant/color_constant.dart';
 
 final API _api = API();
 
@@ -71,7 +55,7 @@ class _TodayPlayMovieWidget extends StatefulWidget {
 
 class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
   var backgroundColor;
-  List<String> urls;
+  List<String>? urls;
 
   @override
   void initState() {
@@ -87,7 +71,7 @@ class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (urls == null || (urls.isEmpty)) {
+    if (urls == null || (urls!.isEmpty)) {
       print('_TodayPlayMovieState urls == null');
       return Container();
     }
@@ -102,9 +86,7 @@ class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
               height: 120.0,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: backgroundColor == null
-                      ? Color.fromARGB(255, 47, 22, 74)
-                      : backgroundColor,
+                  color: backgroundColor == null ? Color.fromARGB(255, 47, 22, 74) : backgroundColor,
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.all(Radius.circular(4.0))),
             ),
@@ -142,8 +124,7 @@ class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
                             padding: EdgeInsets.only(top: 6.0),
                             child: Text(
                               '全部 30 > ',
-                              style:
-                                  TextStyle(fontSize: 13, color: Colors.white),
+                              style: TextStyle(fontSize: 13, color: Colors.white),
                             ),
                           )
                         ],
@@ -188,8 +169,8 @@ class _HotComingSoonWidget extends StatefulWidget {
 
 class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
   int selectIndex = 0;
-  List<Subject> hotShowBeans = List(); //影院热映
-  List<Subject> comingSoonBeans = List(); //即将上映
+  List<Subject> hotShowBeans = []; //影院热映
+  List<Subject> comingSoonBeans = []; //即将上映
   var itemW;
   var hotChildAspectRatio;
   var comingSoonChildAspectRatio;
@@ -221,11 +202,8 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
     hotChildAspectRatio = (377.0 / 674.0);
     comingSoonChildAspectRatio = (377.0 / 742.0);
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 0.0,
-            childAspectRatio: _getRadio()),
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10.0, mainAxisSpacing: 0.0, childAspectRatio: _getRadio()),
         itemBuilder: (BuildContext context, int index) {
           var hotMovieBean;
           var comingSoonBean;
@@ -239,15 +217,9 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
             children: <Widget>[
               Offstage(
                 child: _getComingSoonItem(comingSoonBean, itemW),
-                offstage: !(selectIndex == 1 &&
-                    comingSoonBeans != null &&
-                    comingSoonBeans.length > 0),
+                offstage: !(selectIndex == 1 && comingSoonBeans != null && comingSoonBeans.length > 0),
               ),
-              Offstage(
-                  child: _getHotMovieItem(hotMovieBean, itemW),
-                  offstage: !(selectIndex == 0 &&
-                      hotShowBeans != null &&
-                      hotShowBeans.length > 0))
+              Offstage(child: _getHotMovieItem(hotMovieBean, itemW), offstage: !(selectIndex == 0 && hotShowBeans != null && hotShowBeans.length > 0))
             ],
           );
         });
@@ -285,10 +257,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
 
                   ///多出的文本渐隐方式
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -296,8 +265,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                 decoration: const ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                      side: BorderSide(color: ColorConstant.colorRed277),
-                      borderRadius: BorderRadius.all(Radius.circular(2.0))),
+                      side: BorderSide(color: ColorConstant.colorRed277), borderRadius: BorderRadius.all(Radius.circular(2.0))),
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -306,8 +274,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                   ),
                   child: Text(
                     mainland_pubdate,
-                    style: TextStyle(
-                        fontSize: 8.0, color: ColorConstant.colorRed277),
+                    style: TextStyle(fontSize: 8.0, color: ColorConstant.colorRed277),
                   ),
                 ))
           ],
@@ -344,10 +311,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
 
                   ///多出的文本渐隐方式
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

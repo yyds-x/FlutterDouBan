@@ -2,18 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:math' as math;
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-import 'package:flutter/material.dart';
 
 const double _kLinearProgressIndicatorHeight = 6.0;
 const double _kMinCircularProgressIndicatorSize = 36.0;
@@ -45,7 +39,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// for determinate progress indicators to indicate how much progress has been made.
   /// {@endtemplate}
   const ProgressIndicator({
-    Key key,
+    Key? key,
     this.value,
     this.backgroundColor,
     this.valueColor,
@@ -60,18 +54,18 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// If null, this progress indicator is indeterminate, which means the
   /// indicator displays a predetermined animation that does not indicator how
   /// much actual progress is being made.
-  final double value;
+  final double? value;
 
   /// The progress indicator's background color. The current theme's
   /// [ThemeData.backgroundColor] by default.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// The indicator's color is the animation's value. To specify a constant
   /// color use: `new AlwaysStoppedAnimation<Color>(color)`.
   ///
   /// If null, the progress indicator is rendered with the current theme's
   /// [ThemeData.accentColor].
-  final Animation<Color> valueColor;
+  final Animation<Color>? valueColor;
 
   /// {@template flutter.material.progressIndicator.semanticsLabel}
   /// The [Semantics.label] for this progress indicator.
@@ -80,7 +74,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// read out by screen readers to indicate the purpose of this progress
   /// indicator.
   /// {@endtemplate}
-  final String semanticsLabel;
+  final String? semanticsLabel;
 
   /// {@template flutter.material.progressIndicator.semanticsValue}
   /// The [Semantics.value] for this progress indicator.
@@ -93,28 +87,25 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// For determinate progress indicators, this will be defaulted to [value]
   /// expressed as a percentage, i.e. `0.1` will become '10%'.
   /// {@endtemplate}
-  final String semanticsValue;
+  final String? semanticsValue;
 
-  Color _getBackgroundColor(BuildContext context) =>
-      backgroundColor ?? Theme.of(context).backgroundColor;
+  Color _getBackgroundColor(BuildContext context) => backgroundColor ?? Theme.of(context).colorScheme.surface;
 
-  Color _getValueColor(BuildContext context) =>
-      valueColor?.value ?? Theme.of(context).accentColor;
+  Color _getValueColor(BuildContext context) => valueColor?.value ?? Theme.of(context).colorScheme.secondary;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(PercentProperty('value', value,
-        showName: false, ifNull: '<indeterminate>'));
+    properties.add(PercentProperty('value', value, showName: false, ifNull: '<indeterminate>'));
   }
 
   Widget _buildSemanticsWrapper({
-    @required BuildContext context,
-    @required Widget child,
+    required BuildContext context,
+    required Widget child,
   }) {
-    String expandedSemanticsValue = semanticsValue;
+    String? expandedSemanticsValue = semanticsValue;
     if (value != null) {
-      expandedSemanticsValue ??= '${(value * 100).round()}%';
+      expandedSemanticsValue ??= '${(value! * 100).round()}%';
     }
     return Semantics(
       label: semanticsLabel,
@@ -130,13 +121,13 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
     this.valueColor,
     this.value,
     this.animationValue,
-    @required this.textDirection,
+    required this.textDirection,
   }) : assert(textDirection != null);
 
-  final Color backgroundColor;
-  final Color valueColor;
-  final double value;
-  final double animationValue;
+  final Color? backgroundColor;
+  final Color? valueColor;
+  final double? value;
+  final double? animationValue;
   final TextDirection textDirection;
 
   // The indeterminate progress animation displays two lines whose leading (head)
@@ -165,14 +156,12 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = backgroundColor
+      ..color = backgroundColor!
       ..style = PaintingStyle.fill;
     //绘制背景长条
-    canvas.drawRect(Offset(0 , 0.0 + size.height / 3) & Size(size.width, size.height / 3), paint);
+    canvas.drawRect(Offset(0, 0.0 + size.height / 3) & Size(size.width, size.height / 3), paint);
 
-    paint.color = valueColor;
-
-
+    paint.color = valueColor!;
 
     void drawBar(double x, double width) {
       if (width <= 0.0) return;
@@ -186,38 +175,36 @@ class _LinearProgressIndicatorPainter extends CustomPainter {
           left = x;
           break;
       }
-      canvas.drawRect(Offset(left , 0.0 + size.height / 3) & Size(width, size.height / 3), paint);
+      canvas.drawRect(Offset(left, 0.0 + size.height / 3) & Size(width, size.height / 3), paint);
     }
 
-    double bigCircleRadius =  size.height;
-    double smallCircleRadius =  size.height / 2;
+    double bigCircleRadius = size.height;
+    double smallCircleRadius = size.height / 2;
 
+    final value = this.value;
     if (value != null) {
       drawBar(0.0, value.clamp(0.0, 1.0) * (size.width - bigCircleRadius));
     } else {
-      final double x1 = size.width * line1Tail.transform(animationValue);
-      final double width1 =
-          size.width * line1Head.transform(animationValue) - x1;
+      final double x1 = size.width * line1Tail.transform(animationValue!);
+      final double width1 = size.width * line1Head.transform(animationValue!) - x1;
 
-      final double x2 = size.width * line2Tail.transform(animationValue);
-      final double width2 =
-          size.width * line2Head.transform(animationValue) - x2;
+      final double x2 = size.width * line2Tail.transform(animationValue!);
+      final double width2 = size.width * line2Head.transform(animationValue!) - x2;
 
       drawBar(x1, width1 - bigCircleRadius);
       drawBar(x2, width2 - bigCircleRadius);
     }
 
-   if(value != null && value > 0.0){
-     //绘制大圆圈
-     paint.color = Color.fromARGB(190, paint.color.red, paint.color.green, paint.color.blue);
-     canvas.drawCircle(Offset(value.clamp(0.0, 1.0) * size.width - bigCircleRadius / 2, size.height / 2), bigCircleRadius, paint);
-     //绘制白色圆圈
-     paint.color = Colors.white;
-     canvas.drawCircle(Offset(value.clamp(0.0, 1.0) * size.width - bigCircleRadius / 2, size.height / 2), smallCircleRadius, paint);
-     //重置颜色
-     paint.color = valueColor;
-   }
-
+    if (value != null && value > 0.0) {
+      //绘制大圆圈
+      paint.color = Color.fromARGB(190, paint.color.red, paint.color.green, paint.color.blue);
+      canvas.drawCircle(Offset(value.clamp(0.0, 1.0) * size.width - bigCircleRadius / 2, size.height / 2), bigCircleRadius, paint);
+      //绘制白色圆圈
+      paint.color = Colors.white;
+      canvas.drawCircle(Offset(value.clamp(0.0, 1.0) * size.width - bigCircleRadius / 2, size.height / 2), smallCircleRadius, paint);
+      //重置颜色
+      paint.color = valueColor!;
+    }
   }
 
   @override
@@ -257,12 +244,12 @@ class MyLinearProgressIndicator extends ProgressIndicator {
   ///
   /// {@macro flutter.material.progressIndicator.semantics}
   const MyLinearProgressIndicator({
-    Key key,
-    double value,
-    Color backgroundColor,
-    Animation<Color> valueColor,
-    String semanticsLabel,
-    String semanticsValue,
+    Key? key,
+    double? value,
+    Color? backgroundColor,
+    Animation<Color>? valueColor,
+    String? semanticsLabel,
+    String? semanticsValue,
   }) : super(
           key: key,
           value: value,
@@ -273,13 +260,11 @@ class MyLinearProgressIndicator extends ProgressIndicator {
         );
 
   @override
-  _LinearProgressIndicatorState createState() =>
-      _LinearProgressIndicatorState();
+  _LinearProgressIndicatorState createState() => _LinearProgressIndicatorState();
 }
 
-class _LinearProgressIndicatorState extends State<MyLinearProgressIndicator>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+class _LinearProgressIndicatorState extends State<MyLinearProgressIndicator> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -296,8 +281,7 @@ class _LinearProgressIndicatorState extends State<MyLinearProgressIndicator>
     super.didUpdateWidget(oldWidget);
     if (widget.value == null && !_controller.isAnimating)
       _controller.repeat();
-    else if (widget.value != null && _controller.isAnimating)
-      _controller.stop();
+    else if (widget.value != null && _controller.isAnimating) _controller.stop();
   }
 
   @override
@@ -306,8 +290,7 @@ class _LinearProgressIndicatorState extends State<MyLinearProgressIndicator>
     super.dispose();
   }
 
-  Widget _buildIndicator(BuildContext context, double animationValue,
-      TextDirection textDirection) {
+  Widget _buildIndicator(BuildContext context, double animationValue, TextDirection textDirection) {
     return widget._buildSemanticsWrapper(
       context: context,
       child: Container(
@@ -334,12 +317,11 @@ class _LinearProgressIndicatorState extends State<MyLinearProgressIndicator>
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
 
-    if (widget.value != null)
-      return _buildIndicator(context, _controller.value, textDirection);
+    if (widget.value != null) return _buildIndicator(context, _controller.value, textDirection);
 
     return AnimatedBuilder(
       animation: _controller.view,
-      builder: (BuildContext context, Widget child) {
+      builder: (context, child) {
         return _buildIndicator(context, _controller.value, textDirection);
       },
     );
@@ -349,7 +331,6 @@ class _LinearProgressIndicatorState extends State<MyLinearProgressIndicator>
 // Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
 
 final MethodChannel _channel = const MethodChannel('flutter.io/videoPlayer')
 // This will clear all open videos on the platform when a full restart is
@@ -381,7 +362,7 @@ class DurationRange {
 /// of a [VideoPlayerController].
 class VideoPlayerValue {
   VideoPlayerValue({
-    @required this.duration,
+    required this.duration,
     this.size,
     this.position = const Duration(),
     this.buffered = const <DurationRange>[],
@@ -392,10 +373,9 @@ class VideoPlayerValue {
     this.errorDescription,
   });
 
-  VideoPlayerValue.uninitialized() : this(duration: null);
+  VideoPlayerValue.uninitialized() : this(duration: Duration());
 
-  VideoPlayerValue.erroneous(String errorDescription)
-      : this(duration: null, errorDescription: errorDescription);
+  VideoPlayerValue.erroneous(String errorDescription) : this(duration: Duration(), errorDescription: errorDescription);
 
   /// The total duration of the video.
   ///
@@ -423,27 +403,27 @@ class VideoPlayerValue {
   /// A description of the error if present.
   ///
   /// If [hasError] is false this is [null].
-  final String errorDescription;
+  final String? errorDescription;
 
   /// The [size] of the currently loaded video.
   ///
   /// Is null when [initialized] is false.
-  final Size size;
+  final Size? size;
 
   bool get initialized => duration != null;
   bool get hasError => errorDescription != null;
-  double get aspectRatio => size != null ? size.width / size.height : 1.0;
+  double get aspectRatio => size != null ? size!.width / size!.height : 1.0;
 
   VideoPlayerValue copyWith({
-    Duration duration,
-    Size size,
-    Duration position,
-    List<DurationRange> buffered,
-    bool isPlaying,
-    bool isLooping,
-    bool isBuffering,
-    double volume,
-    String errorDescription,
+    Duration? duration,
+    Size? size,
+    Duration? position,
+    List<DurationRange>? buffered,
+    bool? isPlaying,
+    bool? isLooping,
+    bool? isBuffering,
+    double? volume,
+    String? errorDescription,
   }) {
     return VideoPlayerValue(
       duration: duration ?? this.duration,
@@ -493,7 +473,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
   /// package and null otherwise.
   VideoPlayerController.asset(this.dataSource, {this.package})
       : dataSourceType = DataSourceType.asset,
-        super(VideoPlayerValue(duration: null));
+        super(VideoPlayerValue(duration: Duration()));
 
   /// Constructs a [VideoPlayerController] playing a video from obtained from
   /// the network.
@@ -503,7 +483,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
   VideoPlayerController.network(this.dataSource)
       : dataSourceType = DataSourceType.network,
         package = null,
-        super(VideoPlayerValue(duration: null));
+        super(VideoPlayerValue(duration: Duration()));
 
   /// Constructs a [VideoPlayerController] playing a video from a file.
   ///
@@ -513,21 +493,21 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
       : dataSource = 'file://${file.path}',
         dataSourceType = DataSourceType.file,
         package = null,
-        super(VideoPlayerValue(duration: null));
+        super(VideoPlayerValue(duration: Duration()));
 
-  int _textureId;
+  late int _textureId;
   final String dataSource;
 
   /// Describes the type of data source this [VideoPlayerController]
   /// is constructed with.
   final DataSourceType dataSourceType;
 
-  final String package;
-  Timer _timer;
+  final String? package;
+  late Timer _timer;
   bool _isDisposed = false;
-  Completer<void> _creatingCompleter;
-  StreamSubscription<dynamic> _eventSubscription;
-  _VideoAppLifeCycleObserver _lifeCycleObserver;
+  late Completer<void> _creatingCompleter;
+  late StreamSubscription<dynamic> _eventSubscription;
+  late _VideoAppLifeCycleObserver _lifeCycleObserver;
 
   @visibleForTesting
   int get textureId => _textureId;
@@ -539,10 +519,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
     Map<dynamic, dynamic> dataSourceDescription;
     switch (dataSourceType) {
       case DataSourceType.asset:
-        dataSourceDescription = <String, dynamic>{
-          'asset': dataSource,
-          'package': package
-        };
+        dataSourceDescription = <String, dynamic>{'asset': dataSource, 'package': package};
         break;
       case DataSourceType.network:
         dataSourceDescription = <String, dynamic>{'uri': dataSource};
@@ -575,8 +552,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
         case 'initialized':
           value = value.copyWith(
             duration: Duration(milliseconds: map['duration']),
-            size: Size(map['width']?.toDouble() ?? 0.0,
-                map['height']?.toDouble() ?? 0.0),
+            size: Size(map['width']?.toDouble() ?? 0.0, map['height']?.toDouble() ?? 0.0),
           );
           initializingCompleter.complete(null);
           _applyLooping();
@@ -603,14 +579,12 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
     }
 
     void errorListener(Object obj) {
-      final PlatformException e = obj;
-      value = VideoPlayerValue.erroneous(e.message);
+      final PlatformException e = obj as PlatformException;
+      value = VideoPlayerValue.erroneous(e.message.toString());
       _timer?.cancel();
     }
 
-    _eventSubscription = _eventChannelFor(_textureId)
-        .receiveBroadcastStream()
-        .listen(eventListener, onError: errorListener);
+    _eventSubscription = _eventChannelFor(_textureId).receiveBroadcastStream().listen(eventListener, onError: errorListener);
     return initializingCompleter.future;
   }
 
@@ -682,7 +656,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
       );
       _timer = Timer.periodic(
         const Duration(milliseconds: 500),
-            (Timer timer) async {
+        (Timer timer) async {
           if (_isDisposed) {
             return;
           }
@@ -721,7 +695,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
   /// The position in the current video.
   Future<Duration> get position async {
     if (_isDisposed) {
-      return null;
+      return Duration();
     }
     return Duration(
       // TODO(amirh): remove this on when the invokeMethod update makes it to stable Flutter.
@@ -816,8 +790,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
     };
   }
 
-  VoidCallback _listener;
-  int _textureId;
+  late VoidCallback _listener;
+  late int _textureId;
 
   @override
   void initState() {
@@ -862,8 +836,8 @@ class VideoProgressColors {
 
 class _VideoScrubber extends StatefulWidget {
   _VideoScrubber({
-    @required this.child,
-    @required this.controller,
+    required this.child,
+    required this.controller,
   });
 
   final Widget child;
@@ -881,7 +855,7 @@ class _VideoScrubberState extends State<_VideoScrubber> {
   @override
   Widget build(BuildContext context) {
     void seekToRelativePosition(Offset globalPosition) {
-      final RenderBox box = context.findRenderObject();
+      final RenderBox box = context.findRenderObject() as RenderBox;
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
       final Duration position = controller.value.duration * relative;
@@ -930,15 +904,15 @@ class _VideoScrubberState extends State<_VideoScrubber> {
 /// that will also detect the gestures.
 class VideoProgressIndicator extends StatefulWidget {
   VideoProgressIndicator(
-      this.controller, {
-        VideoProgressColors colors,
-        this.allowScrubbing,
-        this.padding = const EdgeInsets.only(top: 5.0),
-      }) : colors = colors ?? VideoProgressColors();
+    this.controller, {
+    VideoProgressColors? colors,
+    this.allowScrubbing,
+    this.padding = const EdgeInsets.only(top: 5.0),
+  }) : colors = colors ?? VideoProgressColors();
 
   final VideoPlayerController controller;
   final VideoProgressColors colors;
-  final bool allowScrubbing;
+  final bool? allowScrubbing;
   final EdgeInsets padding;
 
   @override
@@ -955,7 +929,7 @@ class _VideoProgressIndicatorState extends State<VideoProgressIndicator> {
     };
   }
 
-  VoidCallback listener;
+  late VoidCallback listener;
 
   VideoPlayerController get controller => widget.controller;
 
@@ -1014,7 +988,7 @@ class _VideoProgressIndicatorState extends State<VideoProgressIndicator> {
       padding: widget.padding,
       child: progressIndicator,
     );
-    if (widget.allowScrubbing) {
+    if (widget.allowScrubbing!) {
       return _VideoScrubber(
         child: paddedProgressIndicator,
         controller: controller,

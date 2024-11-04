@@ -4,9 +4,9 @@
 
 import 'dart:math' as math;
 
-import 'package:flutter/rendering.dart';
-import 'package:flutter/material.dart';
 import 'package:doubanapp/demo/my_scrollable.dart' as my_scrollable;
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 /// A widget that scrolls.
 ///
@@ -45,12 +45,12 @@ abstract class ScrollView extends StatelessWidget {
   ///
   /// If the [primary] argument is true, the [controller] must be null.
   const ScrollView({
-    Key key,
+    Key? key,
     this.scrollDirection = Axis.vertical,
     this.reverse = false,
     this.controller,
-    bool primary,
-    ScrollPhysics physics,
+    bool? primary,
+    ScrollPhysics? physics,
     this.shrinkWrap = false,
     this.cacheExtent,
     this.semanticChildCount,
@@ -61,18 +61,14 @@ abstract class ScrollView extends StatelessWidget {
             !(controller != null && primary == true),
             'Primary ScrollViews obtain their ScrollController via inheritance from a PrimaryScrollController widget. '
             'You cannot both set primary to true and pass an explicit controller.'),
-        primary = primary ??
-            controller == null && identical(scrollDirection, Axis.vertical),
+        primary = primary ?? controller == null && identical(scrollDirection, Axis.vertical),
         physics = physics ??
-            (primary == true ||
-                    (primary == null &&
-                        controller == null &&
-                        identical(scrollDirection, Axis.vertical))
+            (primary == true || (primary == null && controller == null && identical(scrollDirection, Axis.vertical))
                 ? const AlwaysScrollableScrollPhysics()
-                : null),
+                : const AlwaysScrollableScrollPhysics()),
         super(key: key);
 
-  final my_scrollable.VerticalDragGestureListener dragCallBack;
+  final my_scrollable.VerticalDragGestureListener? dragCallBack;
 
   /// The axis along which the scroll view scrolls.
   ///
@@ -105,7 +101,7 @@ abstract class ScrollView extends StatelessWidget {
   /// [ScrollController.keepScrollOffset]). It can be used to read the current
   /// scroll position (see [ScrollController.offset]), or change it (see
   /// [ScrollController.animateTo]).
-  final ScrollController controller;
+  final ScrollController? controller;
 
   /// Whether this is the primary scroll view associated with the parent
   /// [PrimaryScrollController].
@@ -174,7 +170,7 @@ abstract class ScrollView extends StatelessWidget {
   final bool shrinkWrap;
 
   /// {@macro flutter.rendering.viewport.cacheExtent}
-  final double cacheExtent;
+  final double? cacheExtent;
 
   /// The number of children that will contribute semantic information.
   ///
@@ -189,7 +185,7 @@ abstract class ScrollView extends StatelessWidget {
   /// See also:
   ///
   ///  * [SemanticsConfiguration.scrollChildCount], the corresponding semantics property.
-  final int semanticChildCount;
+  final int? semanticChildCount;
 
   /// Returns the [AxisDirection] in which the scroll view scrolls.
   ///
@@ -204,8 +200,7 @@ abstract class ScrollView extends StatelessWidget {
   /// [AxisDirection.right].
   @protected
   AxisDirection getDirection(BuildContext context) {
-    return getAxisDirectionFromAxisReverseAndDirectionality(
-        context, scrollDirection, reverse);
+    return getAxisDirectionFromAxisReverseAndDirectionality(context, scrollDirection, reverse);
   }
 
   /// Build the list of widgets to place inside the viewport.
@@ -247,8 +242,7 @@ abstract class ScrollView extends StatelessWidget {
     final List<Widget> slivers = buildSlivers(context);
     final AxisDirection axisDirection = getDirection(context);
 
-    final ScrollController scrollController =
-        primary ? PrimaryScrollController.of(context) : controller;
+    final ScrollController? scrollController = primary ? PrimaryScrollController.of(context) : controller;
     final my_scrollable.Scrollable scrollable = my_scrollable.Scrollable(
       axisDirection: axisDirection,
       controller: scrollController,
@@ -259,26 +253,18 @@ abstract class ScrollView extends StatelessWidget {
         return buildViewport(context, offset, axisDirection, slivers);
       },
     );
-    return primary && scrollController != null
-        ? PrimaryScrollController.none(child: scrollable)
-        : scrollable;
+    return primary && scrollController != null ? PrimaryScrollController.none(child: scrollable) : scrollable;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(EnumProperty<Axis>('scrollDirection', scrollDirection));
-    properties.add(FlagProperty('reverse',
-        value: reverse, ifTrue: 'reversed', showName: true));
-    properties.add(DiagnosticsProperty<ScrollController>(
-        'controller', controller,
-        showName: false, defaultValue: null));
-    properties.add(FlagProperty('primary',
-        value: primary, ifTrue: 'using primary controller', showName: true));
-    properties.add(DiagnosticsProperty<ScrollPhysics>('physics', physics,
-        showName: false, defaultValue: null));
-    properties.add(FlagProperty('shrinkWrap',
-        value: shrinkWrap, ifTrue: 'shrink-wrapping', showName: true));
+    properties.add(FlagProperty('reverse', value: reverse, ifTrue: 'reversed', showName: true));
+    properties.add(DiagnosticsProperty<ScrollController>('controller', controller, showName: false, defaultValue: null));
+    properties.add(FlagProperty('primary', value: primary, ifTrue: 'using primary controller', showName: true));
+    properties.add(DiagnosticsProperty<ScrollPhysics>('physics', physics, showName: false, defaultValue: null));
+    properties.add(FlagProperty('shrinkWrap', value: shrinkWrap, ifTrue: 'shrink-wrapping', showName: true));
   }
 }
 
@@ -398,16 +384,16 @@ class CustomScrollView extends ScrollView {
   ///
   /// If the [primary] argument is true, the [controller] must be null.
   const CustomScrollView({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    double cacheExtent,
+    double? cacheExtent,
     this.slivers = const <Widget>[],
-    int semanticChildCount,
+    int? semanticChildCount,
   }) : super(
           key: key,
           scrollDirection: scrollDirection,
@@ -440,17 +426,17 @@ abstract class BoxScrollView extends ScrollView {
   ///
   /// If the [primary] argument is true, the [controller] must be null.
   const BoxScrollView({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
     this.padding,
-    double cacheExtent,
-    int semanticChildCount,
-    my_scrollable.VerticalDragGestureListener dragCallBack,
+    double? cacheExtent,
+    int? semanticChildCount,
+    my_scrollable.VerticalDragGestureListener? dragCallBack,
   }) : super(
             key: key,
             scrollDirection: scrollDirection,
@@ -464,38 +450,31 @@ abstract class BoxScrollView extends ScrollView {
             dragCallBack: dragCallBack);
 
   /// The amount of space by which to inset the children.
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   @override
   List<Widget> buildSlivers(BuildContext context) {
     Widget sliver = buildChildLayout(context);
-    EdgeInsetsGeometry effectivePadding = padding;
+    EdgeInsetsGeometry effectivePadding = padding!;
     if (padding == null) {
       final MediaQueryData mediaQuery = MediaQuery.of(context);
       if (mediaQuery != null) {
         // Automatically pad sliver with padding from MediaQuery.
-        final EdgeInsets mediaQueryHorizontalPadding =
-            mediaQuery.padding.copyWith(top: 0.0, bottom: 0.0);
-        final EdgeInsets mediaQueryVerticalPadding =
-            mediaQuery.padding.copyWith(left: 0.0, right: 0.0);
+        final EdgeInsets mediaQueryHorizontalPadding = mediaQuery.padding.copyWith(top: 0.0, bottom: 0.0);
+        final EdgeInsets mediaQueryVerticalPadding = mediaQuery.padding.copyWith(left: 0.0, right: 0.0);
         // Consume the main axis padding with SliverPadding.
-        effectivePadding = scrollDirection == Axis.vertical
-            ? mediaQueryVerticalPadding
-            : mediaQueryHorizontalPadding;
+        effectivePadding = scrollDirection == Axis.vertical ? mediaQueryVerticalPadding : mediaQueryHorizontalPadding;
         // Leave behind the cross axis padding.
         sliver = MediaQuery(
           data: mediaQuery.copyWith(
-            padding: scrollDirection == Axis.vertical
-                ? mediaQueryHorizontalPadding
-                : mediaQueryVerticalPadding,
+            padding: scrollDirection == Axis.vertical ? mediaQueryHorizontalPadding : mediaQueryVerticalPadding,
           ),
           child: sliver,
         );
       }
     }
 
-    if (effectivePadding != null)
-      sliver = SliverPadding(padding: effectivePadding, sliver: sliver);
+    if (effectivePadding != null) sliver = SliverPadding(padding: effectivePadding, sliver: sliver);
     return <Widget>[sliver];
   }
 
@@ -506,8 +485,7 @@ abstract class BoxScrollView extends ScrollView {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding,
-        defaultValue: null));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding, defaultValue: null));
   }
 }
 
@@ -737,21 +715,21 @@ class ListView extends BoxScrollView {
   /// [SliverChildListDelegate.addSemanticIndexes] property. None
   /// may be null.
   ListView({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
+    EdgeInsetsGeometry? padding,
     this.itemExtent,
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
-    double cacheExtent,
+    double? cacheExtent,
     List<Widget> children = const <Widget>[],
-    int semanticChildCount,
+    int? semanticChildCount,
   })  : childrenDelegate = SliverChildListDelegate(
           children,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -798,23 +776,23 @@ class ListView extends BoxScrollView {
   /// [SliverChildBuilderDelegate.addSemanticIndexes] property. None may be
   /// null.
   ListView.builder({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
+    EdgeInsetsGeometry? padding,
     this.itemExtent,
-    @required IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    required IndexedWidgetBuilder itemBuilder,
+    int? itemCount,
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
-    double cacheExtent,
-    my_scrollable.VerticalDragGestureListener dragCallBack,
-    int semanticChildCount,
+    double? cacheExtent,
+    my_scrollable.VerticalDragGestureListener? dragCallBack,
+    int? semanticChildCount,
   })  : childrenDelegate = SliverChildBuilderDelegate(
           itemBuilder,
           childCount: itemCount,
@@ -884,21 +862,21 @@ class ListView extends BoxScrollView {
   /// [SliverChildBuilderDelegate.addSemanticIndexes] property. None may be
   /// null.
   ListView.separated({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
-    @required IndexedWidgetBuilder itemBuilder,
-    @required IndexedWidgetBuilder separatorBuilder,
-    @required int itemCount,
+    EdgeInsetsGeometry? padding,
+    required IndexedWidgetBuilder itemBuilder,
+    required IndexedWidgetBuilder separatorBuilder,
+    required int itemCount,
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
-    double cacheExtent,
+    double? cacheExtent,
   })  : assert(itemBuilder != null),
         assert(separatorBuilder != null),
         assert(itemCount != null && itemCount >= 0),
@@ -945,18 +923,18 @@ class ListView extends BoxScrollView {
   /// For example, a custom child model can control the algorithm used to
   /// estimate the size of children that are not actually visible.
   const ListView.custom({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
+    EdgeInsetsGeometry? padding,
     this.itemExtent,
-    @required this.childrenDelegate,
-    double cacheExtent,
-    int semanticChildCount,
+    required this.childrenDelegate,
+    double? cacheExtent,
+    int? semanticChildCount,
   })  : assert(childrenDelegate != null),
         super(
           key: key,
@@ -978,7 +956,7 @@ class ListView extends BoxScrollView {
   /// determine their own extent because the scrolling machinery can make use of
   /// the foreknowledge of the children's extent to save work, for example when
   /// the scroll position changes drastically.
-  final double itemExtent;
+  final double? itemExtent;
 
   /// A delegate that provides the children for the [ListView].
   ///
@@ -993,7 +971,7 @@ class ListView extends BoxScrollView {
     if (itemExtent != null) {
       return SliverFixedExtentList(
         delegate: childrenDelegate,
-        itemExtent: itemExtent,
+        itemExtent: itemExtent!,
       );
     }
     return SliverList(delegate: childrenDelegate);
@@ -1002,8 +980,7 @@ class ListView extends BoxScrollView {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DoubleProperty('itemExtent', itemExtent, defaultValue: null));
+    properties.add(DoubleProperty('itemExtent', itemExtent, defaultValue: null));
   }
 
   // Helper method to compute the semantic child count for the separated constructor.
@@ -1156,21 +1133,21 @@ class GridView extends BoxScrollView {
   /// [SliverChildListDelegate.addRepaintBoundaries] property. Both must not be
   /// null.
   GridView({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
-    @required this.gridDelegate,
+    EdgeInsetsGeometry? padding,
+    required this.gridDelegate,
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
-    double cacheExtent,
+    double? cacheExtent,
     List<Widget> children = const <Widget>[],
-    int semanticChildCount,
+    int? semanticChildCount,
   })  : assert(gridDelegate != null),
         childrenDelegate = SliverChildListDelegate(
           children,
@@ -1211,22 +1188,22 @@ class GridView extends BoxScrollView {
   /// [SliverChildBuilderDelegate.addRepaintBoundaries] property. Both must not
   /// be null.
   GridView.builder({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
-    @required this.gridDelegate,
-    @required IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    EdgeInsetsGeometry? padding,
+    required this.gridDelegate,
+    required IndexedWidgetBuilder itemBuilder,
+    int? itemCount,
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
-    double cacheExtent,
-    int semanticChildCount,
+    double? cacheExtent,
+    int? semanticChildCount,
   })  : assert(gridDelegate != null),
         childrenDelegate = SliverChildBuilderDelegate(
           itemBuilder,
@@ -1256,18 +1233,18 @@ class GridView extends BoxScrollView {
   ///
   /// The [gridDelegate] and [childrenDelegate] arguments must not be null.
   const GridView.custom({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
-    @required this.gridDelegate,
-    @required this.childrenDelegate,
-    double cacheExtent,
-    int semanticChildCount,
+    EdgeInsetsGeometry? padding,
+    required this.gridDelegate,
+    required this.childrenDelegate,
+    double? cacheExtent,
+    int? semanticChildCount,
   })  : assert(gridDelegate != null),
         assert(childrenDelegate != null),
         super(
@@ -1298,24 +1275,24 @@ class GridView extends BoxScrollView {
   ///
   ///  * [new SliverGrid.count], the equivalent constructor for [SliverGrid].
   GridView.count({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
-    @required int crossAxisCount,
+    EdgeInsetsGeometry? padding,
+    required int crossAxisCount,
     double mainAxisSpacing = 0.0,
     double crossAxisSpacing = 0.0,
     double childAspectRatio = 1.0,
     bool addAutomaticKeepAlives = true,
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
-    double cacheExtent,
+    double? cacheExtent,
     List<Widget> children = const <Widget>[],
-    int semanticChildCount,
+    int? semanticChildCount,
   })  : gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: mainAxisSpacing,
@@ -1356,15 +1333,15 @@ class GridView extends BoxScrollView {
   ///
   ///  * [new SliverGrid.extent], the equivalent constructor for [SliverGrid].
   GridView.extent({
-    Key key,
+    Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController controller,
-    bool primary,
-    ScrollPhysics physics,
+    ScrollController? controller,
+    bool? primary,
+    ScrollPhysics? physics,
     bool shrinkWrap = false,
-    EdgeInsetsGeometry padding,
-    @required double maxCrossAxisExtent,
+    EdgeInsetsGeometry? padding,
+    required double maxCrossAxisExtent,
     double mainAxisSpacing = 0.0,
     double crossAxisSpacing = 0.0,
     double childAspectRatio = 1.0,
@@ -1372,7 +1349,7 @@ class GridView extends BoxScrollView {
     bool addRepaintBoundaries = true,
     bool addSemanticIndexes = true,
     List<Widget> children = const <Widget>[],
-    int semanticChildCount,
+    int? semanticChildCount,
   })  : gridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: maxCrossAxisExtent,
           mainAxisSpacing: mainAxisSpacing,

@@ -1,24 +1,20 @@
-import 'package:doubanapp/bean/celebrity_work_entity.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:doubanapp/router.dart';
-import 'package:doubanapp/http/API.dart';
 import 'package:doubanapp/bean/celebrity_entity.dart';
-import 'package:doubanapp/widgets/title_bar.dart';
-import 'package:doubanapp/widgets/rating_bar.dart';
-import 'package:doubanapp/widgets/image/radius_img.dart';
+import 'package:doubanapp/bean/celebrity_work_entity.dart';
 import 'package:doubanapp/repository/person_detail_repository.dart';
+import 'package:doubanapp/router.dart';
+import 'package:doubanapp/widgets/image/radius_img.dart';
 import 'package:doubanapp/widgets/item_count_title.dart';
 import 'package:doubanapp/widgets/loading_widget.dart';
+import 'package:doubanapp/widgets/rating_bar.dart';
 import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
 import 'package:doubanapp/widgets/title_bar.dart' as title;
+import 'package:flutter/material.dart';
 
 class PersonDetailPage extends StatefulWidget {
   final String id;
   final String personImgUrl;
 
-  const PersonDetailPage(this.personImgUrl, this.id, {Key key})
-      : super(key: key);
+  const PersonDetailPage(this.personImgUrl, this.id, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,12 +23,12 @@ class PersonDetailPage extends StatefulWidget {
 }
 
 class _PersonDetailPageState extends State<PersonDetailPage> {
-  CelebrityEntity celebrityEntity;
+  CelebrityEntity? celebrityEntity;
 
-  CelebrityWorkEntity celebrityWorkEntity;
-  double itemW;
-  double itemH;
-  double photoH;
+  CelebrityWorkEntity? celebrityWorkEntity;
+  late double itemW;
+  late double itemH;
+  late double photoH;
   double titleSize = 16.0;
   bool loading = true;
 
@@ -82,12 +78,11 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            celebrityEntity.name,
-                            style: TextStyle(
-                                fontSize: 19.0, fontWeight: FontWeight.bold),
+                            celebrityEntity!.name,
+                            style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            celebrityEntity.name_en,
+                            celebrityEntity!.name_en,
                             style: TextStyle(fontSize: 13.0),
                           ),
                         ],
@@ -99,12 +94,11 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
                   padding: EdgeInsets.only(top: 25.0, bottom: 7.0),
                   child: Text(
                     '简介',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: titleSize),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: titleSize),
                   ),
                 ),
                 Text(
-                  celebrityEntity.summary,
+                  celebrityEntity!.summary,
                   softWrap: true,
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
@@ -117,7 +111,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
               padding: EdgeInsets.only(top: 25.0, bottom: 10.0),
               child: ItemCountTitle(
                 '影视',
-                count: celebrityWorkEntity.works.length,
+                count: celebrityWorkEntity!.works.length,
                 fontSize: titleSize,
               ),
             ),
@@ -128,21 +122,20 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  CelebrityWorkWorksSubject bean =
-                      celebrityWorkEntity.works[index].subject;
+                  CelebrityWorkWorksSubject bean = celebrityWorkEntity!.works[index].subject;
                   return Padding(
                     padding: EdgeInsets.all(5.0),
                     child: _getItem(bean),
                   );
                 },
-                itemCount: celebrityWorkEntity.works.length,
+                itemCount: celebrityWorkEntity!.works.length,
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: ItemCountTitle(
               '相册',
-              count: celebrityEntity.photos.length,
+              count: celebrityEntity!.photos.length,
               fontSize: titleSize,
             ),
           ),
@@ -155,13 +148,13 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
                   return Padding(
                     padding: EdgeInsets.only(top: 15.0, right: 3.0),
                     child: Image.network(
-                      celebrityEntity.photos[index].image,
+                      celebrityEntity!.photos[index].image,
                       height: photoH,
                       fit: BoxFit.contain,
                     ),
                   );
                 },
-                itemCount: celebrityEntity.photos.length,
+                itemCount: celebrityEntity!.photos.length,
               ),
             ),
           )
@@ -171,8 +164,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
   }
 
   void requestAPI() async {
-    Future(() => (PersonDetailRepository().requestAPI(widget.id)))
-        .then((personDetailRepository) {
+    Future(() => (PersonDetailRepository().requestAPI(widget.id))).then((personDetailRepository) {
       setState(() {
         loading = false;
         celebrityEntity = personDetailRepository.celebrityEntity;
@@ -212,10 +204,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
 
                   ///多出的文本渐隐方式
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -234,22 +223,22 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
 }
 
 class _PersonPhoto extends StatelessWidget {
-  const _PersonPhoto({Key key, this.photoUrl}) : super(key: key);
-  final String photoUrl;
+  const _PersonPhoto({Key? key, this.photoUrl}) : super(key: key);
+  final String? photoUrl;
 
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width / 5;
     return SizedBox(
       width: w,
       child: Hero(
-        tag: photoUrl,
+        tag: photoUrl!,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
               Navigator.of(context).pop();
             },
-            child: RadiusImg.get(photoUrl, w, imgH: w / 0.8, elevation: 3.0),
+            child: RadiusImg.get(photoUrl!, w, imgH: w / 0.8, elevation: 3.0),
           ),
         ),
       ),

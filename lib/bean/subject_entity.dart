@@ -1,111 +1,117 @@
-class SubjectEntity {
+import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'subject_entity.g.dart';
+
+@JsonSerializable()
+@CopyWith()
+class SubjectEntity {
 //  "subject":Object{...},
 //  "rank":1,
 //  "delta":0
 
-  Subject subject;
-  var rank;
-  var delta;
+  final Subject subject;
+  final rank;
+  final delta;
 
-  SubjectEntity.fromMap(Map<String, dynamic> map){
-    rank = map['rank'];
-    delta = map['delta'];
-    var subjectMap = map['subject'];
-    subject = Subject.fromMap(subjectMap);
-  }
+  const SubjectEntity({this.subject = const Subject(), this.delta, this.rank});
+
+  factory SubjectEntity.fromJson(Map<String, dynamic> json) => _$SubjectEntityFromJson(json);
+  Map<String, dynamic> toJson() => _$SubjectEntityToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Subject {
-  bool tag = false;
-  Rating rating;
-  var genres;
-  var title;
-  List<Cast> casts;
-  var durations;
-  var collect_count;
-  var mainland_pubdate;
-  var has_video;
-  var original_title;
-  var subtype;
-  var directors;
-  var pubdates;
-  var year;
-  Images images;
-  var alt;
-  var id;
+  final bool tag;
+  final Rating rating;
+  final genres;
+  final title;
+  final List<Cast> casts;
+  final durations;
+  final collect_count;
+  final mainland_pubdate;
+  final has_video;
+  final original_title;
+  final subtype;
+  final directors;
+  final pubdates;
+  final year;
+  final Images images;
+  final alt;
+  final id;
+  const Subject({
+    this.durations = const [],
+    this.collect_count = 0,
+    this.mainland_pubdate = '',
+    this.has_video = false,
+    this.original_title = '',
+    this.subtype = '',
+    this.directors = const [],
+    this.pubdates = const [],
+    this.casts = const [],
+    this.year = '',
+    this.alt = '',
+    this.id = '',
+    this.images = const Images(),
+    this.tag = false,
+    this.rating = const Rating(),
+    this.genres = const [],
+    this.title = '',
+  });
 
-  ///构造函数
-  Subject.fromMap(Map<String, dynamic> map) {
-    var rating = map['rating'];
-    this.rating = Rating(rating['average'], rating['max']);
-    genres = map['genres'];
-    title = map['title'];
-    var castMap = map['casts'];
-    casts = _converCasts(castMap);
-    collect_count = map['collect_count'];
-    original_title = map['original_title'];
-    subtype = map['subtype'];
-    directors = map['directors'];
-    year = map['year'];
-    var img = map['images'];
-    images = Images(img['small'], img['large'], img['medium']);
-    alt = map['alt'];
-    id = map['id'];
-    durations = map['durations'];
-    mainland_pubdate = map['mainland_pubdate'];
-    has_video = map['has_video'];
-    pubdates = map['pubdates'];
-  }
+  factory Subject.fromJson(Map<String, dynamic> json) => _$SubjectFromJson(json);
+  Map<String, dynamic> toJson() => _$SubjectToJson(this);
 
   _converCasts(casts) {
-    return casts.map<Cast>((item)=>Cast.fromMap(item)).toList();
+    return casts.map<Cast>((item) => Cast.fromJson(item)).toList();
   }
-
 }
 
+@JsonSerializable()
+@CopyWith()
 class Images {
-  var small;
-  var large;
-  var medium;
+  final small;
+  final large;
+  final medium;
 
-  Images(this.small, this.large, this.medium);
+  const Images({this.small, this.large, this.medium});
+  factory Images.fromJson(Map<String, dynamic> json) => _$ImagesFromJson(json);
+  Map<String, dynamic> toJson() => _$ImagesToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Rating {
-  var average;
-  var max;
-  Rating(this.average, this.max);
+  final average;
+  final max;
+  const Rating({this.average, this.max});
+
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 }
 
-
-
+@JsonSerializable()
+@CopyWith()
 class Cast {
-  var id;
-  var name_en;
-  var name;
+  final id;
+  final name_en;
+  final name;
   Avatar avatars;
-  var alt;
+  final alt;
   Cast(this.avatars, this.name_en, this.name, this.alt, this.id);
 
-  Cast.fromMap(Map<String, dynamic> map) {
-    id = map['id'];
-    name_en = map['name_en'];
-    name = map['name'];
-    alt = map['alt'];
-    var tmp = map['avatars'];
-    if(tmp == null){
-      avatars = null;
-    }else{
-      avatars = Avatar(tmp['small'], tmp['large'], tmp['medium']);
-    }
-
-  }
+  factory Cast.fromJson(Map<String, dynamic> json) => _$CastFromJson(json);
+  Map<String, dynamic> toJson() => _$CastToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Avatar {
-  var medium;
-  var large;
-  var small;
+  final medium;
+  final large;
+  final small;
   Avatar(this.small, this.large, this.medium);
+  factory Avatar.fromJson(Map<String, dynamic> json) => _$AvatarFromJson(json);
+  Map<String, dynamic> toJson() => _$AvatarToJson(this);
 }

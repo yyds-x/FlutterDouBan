@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:doubanapp/widgets/rating_bar.dart';
+import 'package:flutter/material.dart';
 
 class ScoreStartWidget extends StatefulWidget {
   final score;
@@ -9,14 +9,7 @@ class ScoreStartWidget extends StatefulWidget {
   final p2;
   final p1;
 
-  ScoreStartWidget(
-      {Key key,
-      @required this.score,
-      @required this.p1,
-      @required this.p2,
-      @required this.p3,
-      @required this.p4,
-      @required this.p5})
+  ScoreStartWidget({Key? key, required this.score, required this.p1, required this.p2, required this.p3, required this.p4, required this.p5})
       : super(key: key);
 
   @override
@@ -33,9 +26,7 @@ class _ScoreStartState extends State<ScoreStartWidget> {
     lineW = MediaQuery.of(context).size.width / 3;
     return Container(
       padding: EdgeInsets.all(13.0),
-      decoration: BoxDecoration(
-          color: Color(0x23000000),
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      decoration: BoxDecoration(color: Color(0x23000000), borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: Column(
         children: <Widget>[
           Row(
@@ -112,23 +103,19 @@ class _ScoreStartState extends State<ScoreStartWidget> {
         Container(
           width: lineW,
           height: 7.0,
-          decoration: BoxDecoration(
-              color: Color(0x13000000),
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          decoration: BoxDecoration(color: Color(0x13000000), borderRadius: BorderRadius.all(Radius.circular(10.0))),
         ),
         Container(
           height: 7.0,
           width: lineW * percent,
-          decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 170, 71),
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          decoration: BoxDecoration(color: Color.fromARGB(255, 255, 170, 71), borderRadius: BorderRadius.all(Radius.circular(10.0))),
         )
       ],
     );
   }
 
   startsLine(int startCount, double percent) {
-    if(percent == null || percent.isNaN){
+    if (percent == null || percent.isNaN) {
       percent = 0.0;
     }
     return Padding(

@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 class HeartImgWidget extends StatefulWidget {
   final Image img;
 
-  HeartImgWidget(this.img, {Key key}) : super(key: key);
+  HeartImgWidget(this.img, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HeartImgWidgetState();
 }
 
-class _HeartImgWidgetState extends State<HeartImgWidget>
-    with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  Animation<double> animation;
+class _HeartImgWidgetState extends State<HeartImgWidget> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
 
   @override
   void initState() {
     super.initState();
-    controller = new AnimationController(
-        duration: const Duration(milliseconds: 1500), vsync: this);
+    controller = new AnimationController(duration: const Duration(milliseconds: 1500), vsync: this);
     animation = new CurvedAnimation(parent: controller, curve: Curves.easeIn)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -47,11 +45,10 @@ class _AnimatedImg extends AnimatedWidget {
   static final _opacityTween = new Tween<double>(begin: 0.5, end: 1.0);
   static final _sizeTween = new Tween<double>(begin: 290.0, end: 300.0);
   final Image img;
-  _AnimatedImg(this.img, {Key key, Animation<double> animation})
-      : super(key: key, listenable: animation);
+  _AnimatedImg(this.img, {Key? key, Animation<double>? animation}) : super(key: key, listenable: animation!);
 
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
+    final Animation<double> animation = listenable as Animation<double>;
     return new Center(
       child: new Opacity(
         opacity: _opacityTween.evaluate(animation),

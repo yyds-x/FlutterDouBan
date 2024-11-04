@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:doubanapp/widgets/search_text_field_widget.dart';
-import 'package:doubanapp/pages/home/home_app_bar.dart' as myapp;
-import 'package:doubanapp/http/http_request.dart';
-import 'package:doubanapp/http/mock_request.dart';
-import 'package:doubanapp/http/API.dart';
 import 'package:doubanapp/bean/subject_entity.dart';
-import 'package:doubanapp/widgets/image/radius_img.dart';
 import 'package:doubanapp/constant/constant.dart';
-import 'package:doubanapp/widgets/video_widget.dart';
+import 'package:doubanapp/http/API.dart';
+import 'package:doubanapp/http/mock_request.dart';
+import 'package:doubanapp/pages/home/home_app_bar.dart' as myapp;
 import 'package:doubanapp/router.dart';
+import 'package:doubanapp/widgets/image/radius_img.dart';
+import 'package:doubanapp/widgets/search_text_field_widget.dart';
+import 'package:doubanapp/widgets/video_widget.dart';
+import 'package:flutter/material.dart';
 
 ///首页，TAB页面，显示动态和推荐TAB
 class HomePage extends StatelessWidget {
@@ -97,7 +96,7 @@ DefaultTabController getWidget() {
 class SliverContainer extends StatefulWidget {
   final String name;
 
-  SliverContainer({Key key, @required this.name}) : super(key: key);
+  SliverContainer({Key? key, required this.name}) : super(key: key);
 
   @override
   _SliverContainerState createState() => _SliverContainerState();
@@ -120,7 +119,7 @@ class _SliverContainerState extends State<SliverContainer> {
     }
   }
 
-  List<Subject> list;
+  List<Subject> list = [];
 
   void requestAPI() async {
 //    var _request = HttpRequest(API.BASE_URL);
@@ -131,7 +130,7 @@ class _SliverContainerState extends State<SliverContainer> {
     var _request = MockRequest();
     var result = await _request.get(API.TOP_250);
     var resultList = result['subjects'];
-    list = resultList.map<Subject>((item) => Subject.fromMap(item)).toList();
+    list = resultList.map<Subject>((item) => Subject.fromJson(item)).toList();
     setState(() {});
   }
 
@@ -171,12 +170,10 @@ class _SliverContainerState extends State<SliverContainer> {
             slivers: <Widget>[
               SliverOverlapInjector(
                 // This is the flip side of the SliverOverlapAbsorber above.
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               ),
               SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      ((BuildContext context, int index) {
+                  delegate: SliverChildBuilderDelegate(((BuildContext context, int index) {
                 return getCommonItem(list, index);
               }), childCount: list.length)),
             ],
@@ -197,11 +194,7 @@ class _SliverContainerState extends State<SliverContainer> {
       height: showVideo ? contentVideoHeight : singleLineImgHeight,
       color: Colors.white,
       margin: const EdgeInsets.only(bottom: 10.0),
-      padding: const EdgeInsets.only(
-          left: Constant.MARGIN_LEFT,
-          right: Constant.MARGIN_RIGHT,
-          top: Constant.MARGIN_RIGHT,
-          bottom: 10.0),
+      padding: const EdgeInsets.only(left: Constant.MARGIN_LEFT, right: Constant.MARGIN_RIGHT, top: Constant.MARGIN_RIGHT, bottom: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -243,8 +236,7 @@ class _SliverContainerState extends State<SliverContainer> {
                   height: 25.0,
                 ),
                 Image.asset(
-                  Constant.ASSETS_IMG +
-                      'ic_notification_tv_calendar_comments.png',
+                  Constant.ASSETS_IMG + 'ic_notification_tv_calendar_comments.png',
                   width: 20.0,
                   height: 20.0,
                 ),
@@ -266,37 +258,33 @@ class _SliverContainerState extends State<SliverContainer> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         Expanded(
-          child: RadiusImg.get(item.images.large, null,
+          child: RadiusImg.get(item.images.large, 50,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5.0),
-                    bottomLeft: Radius.circular(5.0)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), bottomLeft: Radius.circular(5.0)),
               )),
         ),
         Expanded(
-          child: RadiusImg.get(item.casts[1].avatars.medium, null, radius: 0.0),
+          child: RadiusImg.get(item.casts[1].avatars.medium, 50, radius: 0.0),
         ),
         Expanded(
-          child: RadiusImg.get(item.casts[2].avatars.medium, null,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(5.0),
-                      bottomRight: Radius.circular(5.0)))),
+          child: RadiusImg.get(item.casts[2].avatars.medium, 50,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(5.0), bottomRight: Radius.circular(5.0)))),
         )
       ],
     );
   }
 
   getContentVideo(int index) {
-    if(!mounted){
+    if (!mounted) {
       return Container();
     }
     return VideoWidget(
-      index == 1 ? Constant.URL_MP4_DEMO_0 :  Constant.URL_MP4_DEMO_1,
+      index == 1 ? Constant.URL_MP4_DEMO_0 : Constant.URL_MP4_DEMO_1,
       showProgressBar: false,
     );
   }
 }
+
 ///动态TAB
 _loginContainer(BuildContext context) {
   return Align(
@@ -321,11 +309,8 @@ _loginContainer(BuildContext context) {
               '去登录',
               style: TextStyle(fontSize: 16.0, color: Colors.green),
             ),
-            padding: const EdgeInsets.only(
-                left: 35.0, right: 35.0, top: 8.0, bottom: 8.0),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.green),
-                borderRadius: const BorderRadius.all(Radius.circular(6.0))),
+            padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 8.0, bottom: 8.0),
+            decoration: BoxDecoration(border: Border.all(color: Colors.green), borderRadius: const BorderRadius.all(Radius.circular(6.0))),
           ),
           onTap: () {
             MyRouter.push(context, MyRouter.searchPage, '搜索笨啦灯');

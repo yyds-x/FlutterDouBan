@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
 //系统默认的appBar等高度
 //位于Dart Packages/flutter/src/material/constans.dart
 
@@ -40,7 +41,7 @@ class ScreenUtils {
   double _statusBarHeight = 0.0;
   double _bottomBarHeight = 0.0;
   double _appBarHeight = 0.0;
-  MediaQueryData _mediaQueryData;
+  late MediaQueryData _mediaQueryData;
 
   static final ScreenUtils _singleton = ScreenUtils();
 
@@ -50,7 +51,7 @@ class ScreenUtils {
   }
 
   _init() {
-    MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
+    MediaQueryData mediaQuery = MediaQueryData.fromView(ui.window);
     if (_mediaQueryData != mediaQuery) {
       _mediaQueryData = mediaQuery;
       _screenWidth = mediaQuery.size.width;
@@ -178,18 +179,14 @@ class ScreenUtils {
   /// 返回根据屏幕宽适配后尺寸（单位 dp or pt）
   /// sizePx unit px
   double getWidthPx(double sizePx) {
-    return _screenWidth == 0.0
-        ? (sizePx / _designD)
-        : (sizePx * _screenWidth / (_designW * _designD));
+    return _screenWidth == 0.0 ? (sizePx / _designD) : (sizePx * _screenWidth / (_designW * _designD));
   }
 
   /// returns the size after adaptation according to the screen height.(unit dp or pt)
   /// 返回根据屏幕高适配后尺寸（单位 dp or pt）
   /// sizePx unit px
   double getHeightPx(double sizePx) {
-    return _screenHeight == 0.0
-        ? (sizePx / _designD)
-        : (sizePx * _screenHeight / (_designH * _designD));
+    return _screenHeight == 0.0 ? (sizePx / _designD) : (sizePx * _screenHeight / (_designH * _designD));
   }
 
   /// returns the font size after adaptation according to the screen density.

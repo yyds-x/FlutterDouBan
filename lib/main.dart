@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:flutter/services.dart';
-import 'package:doubanapp/widgets/bottom_drag_widget.dart';
+
 import 'package:doubanapp/pages/splash/splash_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
   if (Platform.isAndroid) {
     //设置Android头部的导航栏透明
-    SystemUiOverlayStyle systemUiOverlayStyle =
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
@@ -21,7 +20,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RestartWidget(
       child: MaterialApp(
-        theme: ThemeData(backgroundColor: Colors.white),
+        // theme: ThemeData(backgroundColor: Colors.white),
+        theme: ThemeData(
+          primarySwatch: Colors.blue, // 主色调
+          brightness: Brightness.light, // 设置为亮色主题
+          scaffoldBackgroundColor: Colors.white, // 背景色
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.white, // AppBar 背景色
+            iconTheme: IconThemeData(color: Colors.black), // 图标颜色
+            titleTextStyle: TextStyle(color: Colors.black), // 标题文字颜色
+          ),
+          // 你可以在这里自定义其他主题属性
+        ),
         home: Scaffold(
           body: SplashWidget(),
         ),
@@ -35,14 +45,13 @@ class MyApp extends StatelessWidget {
 class RestartWidget extends StatefulWidget {
   final Widget child;
 
-  RestartWidget({Key key, @required this.child})
+  RestartWidget({Key? key, required this.child})
       : assert(child != null),
         super(key: key);
 
   static restartApp(BuildContext context) {
-    final _RestartWidgetState state =
-        context.findAncestorStateOfType<_RestartWidgetState>();
-    state.restartApp();
+    final _RestartWidgetState? state = context.findAncestorStateOfType<_RestartWidgetState>();
+    state?.restartApp();
   }
 
   @override

@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:doubanapp/widgets/search_text_field_widget.dart';
-import 'package:doubanapp/router.dart';
+import 'package:doubanapp/bean/subject_entity.dart';
 import 'package:doubanapp/constant/constant.dart';
 import 'package:doubanapp/http/API.dart';
 import 'package:doubanapp/http/http_request.dart';
-import 'package:doubanapp/bean/subject_entity.dart';
-import 'package:doubanapp/widgets/loading_widget.dart';
+import 'package:doubanapp/router.dart';
 import 'package:doubanapp/widgets/image/radius_img.dart';
+import 'package:doubanapp/widgets/loading_widget.dart';
+import 'package:doubanapp/widgets/search_text_field_widget.dart';
+import 'package:flutter/material.dart';
+
 ///小组
 class GroupPage extends StatelessWidget {
   @override
@@ -41,7 +42,7 @@ class _GroupWidget extends StatefulWidget {
 var _request = HttpRequest(API.BASE_URL);
 
 class _GroupWidgetState extends State<_GroupWidget> {
-  List<Subject> list;
+  List<Subject> list = [];
   bool loading = true;
 
   @override
@@ -52,8 +53,7 @@ class _GroupWidgetState extends State<_GroupWidget> {
     }).then((result) {
       var resultList = result['subjects'];
       setState(() {
-        list =
-            resultList.map<Subject>((item) => Subject.fromMap(item)).toList();
+        list = resultList.map<Subject>((item) => Subject.fromJson(item)).toList();
         loading = false;
       });
     });
@@ -79,8 +79,7 @@ class _GroupWidgetState extends State<_GroupWidget> {
 
         Subject bean = list[index - 1];
         return Padding(
-          padding: const EdgeInsets.only(
-              right: Constant.MARGIN_RIGHT, left: 6.0, top: 13.0),
+          padding: const EdgeInsets.only(right: Constant.MARGIN_RIGHT, left: 6.0, top: 13.0),
           child: _getItem(bean, index - 1),
         );
       },
@@ -103,8 +102,7 @@ class _GroupWidgetState extends State<_GroupWidget> {
                 children: <Widget>[
                   Text(
                     bean.title,
-                    style:
-                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
                   ),
                   Text(bean.pubdates != null ? bean.pubdates[0] : '', style: TextStyle(fontSize: 13.0))
                 ],
@@ -113,20 +111,20 @@ class _GroupWidgetState extends State<_GroupWidget> {
           ),
           Padding(
             padding: EdgeInsets.only(right: 10.0),
-            child: Text('${bean.collect_count}人', style: TextStyle(fontSize: 13.0),),
+            child: Text(
+              '${bean.collect_count}人',
+              style: TextStyle(fontSize: 13.0),
+            ),
           ),
           GestureDetector(
             child: Image.asset(
-              Constant.ASSETS_IMG +
-                  (list[index].tag
-                      ? 'ic_group_checked_anonymous.png'
-                      : 'ic_group_check_anonymous.png'),
+              Constant.ASSETS_IMG + (list[index].tag ? 'ic_group_checked_anonymous.png' : 'ic_group_check_anonymous.png'),
               width: 25.0,
               height: 25.0,
             ),
             onTap: () {
               setState(() {
-                list[index].tag = !list[index].tag;
+                // list[index].tag = !list[index].tag;
               });
             },
           )

@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
+
+import 'package:doubanapp/router.dart';
 import 'package:doubanapp/widgets/my_tab_bar_widget.dart';
 import 'package:doubanapp/widgets/search_text_field_widget.dart';
-import 'package:doubanapp/router.dart';
+import 'package:flutter/material.dart';
 
 var titleList = ['电影', '电视', '综艺', '读书', '音乐', '同城'];
 
-List<Widget> tabList;
+List<Widget> tabList = [];
 
 ///书影音
 ///包含了'电影', '电视', '综艺', '读书', '音乐', '同城' item Widget
@@ -20,10 +20,9 @@ class BookAudioVideoPage extends StatefulWidget {
   }
 }
 
-TabController _tabController;
+late TabController _tabController;
 
-class _BookAudioVideoPageState extends State<BookAudioVideoPage>
-    with SingleTickerProviderStateMixin {
+class _BookAudioVideoPageState extends State<BookAudioVideoPage> with SingleTickerProviderStateMixin {
   var tabBar;
 
   @override
@@ -37,9 +36,9 @@ class _BookAudioVideoPageState extends State<BookAudioVideoPage>
   List<Widget> getTabList() {
     return titleList
         .map((item) => Text(
-      '$item',
-      style: TextStyle(fontSize: 15),
-    ))
+              '$item',
+              style: TextStyle(fontSize: 15),
+            ))
         .toList();
   }
 
@@ -47,9 +46,7 @@ class _BookAudioVideoPageState extends State<BookAudioVideoPage>
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: SafeArea(
-          child: DefaultTabController(
-              length: titleList.length, child: _getNestedScrollView(tabBar))),
+      child: SafeArea(child: DefaultTabController(length: titleList.length, child: _getNestedScrollView(tabBar))),
     );
   }
 }
@@ -89,7 +86,7 @@ Widget _getNestedScrollView(Widget tabBar) {
 }
 
 class HomePageTabBar extends StatefulWidget {
-  HomePageTabBar({Key key}) : super(key: key);
+  HomePageTabBar({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -99,9 +96,9 @@ class HomePageTabBar extends StatefulWidget {
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
-    @required this.minHeight,
-    @required this.maxHeight,
-    @required this.child,
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
   });
 
   final double minHeight;
@@ -115,22 +112,19 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => math.max((minHeight ?? kToolbarHeight), minExtent);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child;
   }
 
   @override
   bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
+    return maxHeight != oldDelegate.maxHeight || minHeight != oldDelegate.minHeight || child != oldDelegate.child;
   }
 }
 
 class _HomePageTabBarState extends State<HomePageTabBar> {
-  Color selectColor, unselectedColor;
-  TextStyle selectStyle, unselectedStyle;
+  late Color selectColor, unselectedColor;
+  late TextStyle selectStyle, unselectedStyle;
 
   @override
   void initState() {
@@ -150,7 +144,7 @@ class _HomePageTabBarState extends State<HomePageTabBar> {
   @override
   Widget build(BuildContext context) {
     //Tab小部件列表
-//    List<Widget>  @required this.tabs,
+//    List<Widget>  required this.tabs,
     //组件选中以及动画的状态
 //   TabController this.controller,
     //Tab是否可滑动(false->整个tab会把宽度填满，true-> tab包裹)

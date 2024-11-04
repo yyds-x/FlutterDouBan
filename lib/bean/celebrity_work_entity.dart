@@ -1,378 +1,213 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'celebrity_work_entity.g.dart';
+
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkEntity {
-	CelebrityWorkCelebrity celebrity;
-	int total;
-	List<CelebrityWorkWork> works;
-	int count;
-	int start;
+  final CelebrityWorkCelebrity celebrity;
+  final int total;
+  final List<CelebrityWorkWork> works;
+  final int count;
+  final int start;
 
-	CelebrityWorkEntity({this.celebrity, this.total, this.works, this.count, this.start});
+  CelebrityWorkEntity({this.celebrity = const CelebrityWorkCelebrity(), this.total = 0, this.works = const [], this.count = 0, this.start = 0});
 
-	CelebrityWorkEntity.fromJson(Map<String, dynamic> json) {
-		celebrity = json['celebrity'] != null ? new CelebrityWorkCelebrity.fromJson(json['celebrity']) : null;
-		total = json['total'];
-		if (json['works'] != null) {
-			works = new List<CelebrityWorkWork>();
-			json['works'].forEach((v) { works.add(new CelebrityWorkWork.fromJson(v)); });
-		}
-		count = json['count'];
-		start = json['start'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		if (this.celebrity != null) {
-      data['celebrity'] = this.celebrity.toJson();
-    }
-		data['total'] = this.total;
-		if (this.works != null) {
-      data['works'] = this.works.map((v) => v.toJson()).toList();
-    }
-		data['count'] = this.count;
-		data['start'] = this.start;
-		return data;
-	}
+  factory CelebrityWorkEntity.fromJson(Map<String, dynamic> json) => _$CelebrityWorkEntityFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkEntityToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkCelebrity {
-	String name;
-	String alt;
-	String id;
-	CelebrityWorkCelebrityAvatars avatars;
-	String nameEn;
+  final String name;
+  final String alt;
+  final String id;
+  final CelebrityWorkCelebrityAvatars avatars;
+  @JsonKey(name: "name_en")
+  final String nameEn;
 
-	CelebrityWorkCelebrity({this.name, this.alt, this.id, this.avatars, this.nameEn});
+  const CelebrityWorkCelebrity({this.name = '', this.alt = '', this.id = '', this.avatars = const CelebrityWorkCelebrityAvatars(), this.nameEn = ''});
 
-	CelebrityWorkCelebrity.fromJson(Map<String, dynamic> json) {
-		name = json['name'];
-		alt = json['alt'];
-		id = json['id'];
-		avatars = json['avatars'] != null ? new CelebrityWorkCelebrityAvatars.fromJson(json['avatars']) : null;
-		nameEn = json['name_en'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['name'] = this.name;
-		data['alt'] = this.alt;
-		data['id'] = this.id;
-		if (this.avatars != null) {
-      data['avatars'] = this.avatars.toJson();
-    }
-		data['name_en'] = this.nameEn;
-		return data;
-	}
+  factory CelebrityWorkCelebrity.fromJson(Map<String, dynamic> json) => _$CelebrityWorkCelebrityFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkCelebrityToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkCelebrityAvatars {
-	String small;
-	String large;
-	String medium;
+  final String small;
+  final String large;
+  final String medium;
 
-	CelebrityWorkCelebrityAvatars({this.small, this.large, this.medium});
+  const CelebrityWorkCelebrityAvatars({this.small = '', this.large = '', this.medium = ''});
 
-	CelebrityWorkCelebrityAvatars.fromJson(Map<String, dynamic> json) {
-		small = json['small'];
-		large = json['large'];
-		medium = json['medium'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['small'] = this.small;
-		data['large'] = this.large;
-		data['medium'] = this.medium;
-		return data;
-	}
+  factory CelebrityWorkCelebrityAvatars.fromJson(Map<String, dynamic> json) => _$CelebrityWorkCelebrityAvatarsFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkCelebrityAvatarsToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWork {
-	CelebrityWorkWorksSubject subject;
-	List<String> roles;
+  final CelebrityWorkWorksSubject subject;
+  final List<String> roles;
 
-	CelebrityWorkWork({this.subject, this.roles});
+  CelebrityWorkWork({this.subject = const CelebrityWorkWorksSubject(), this.roles = const []});
 
-	CelebrityWorkWork.fromJson(Map<String, dynamic> json) {
-		subject = json['subject'] != null ? new CelebrityWorkWorksSubject.fromJson(json['subject']) : null;
-		roles = json['roles'].cast<String>();
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		if (this.subject != null) {
-      data['subject'] = this.subject.toJson();
-    }
-		data['roles'] = this.roles;
-		return data;
-	}
+  factory CelebrityWorkWork.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorkFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorkToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubject {
-	CelebrityWorkWorksSubjectImages images;
-	String originalTitle;
-	String year;
-	List<CelebrityWorkWorksSubjectDirector> directors;
-	CelebrityWorkWorksSubjectRating rating;
-	String alt;
-	String title;
-	int collectCount;
-	bool hasVideo;
-	List<String> pubdates;
-	List<CelebrityWorkWorksSubjectCast> casts;
-	String subtype;
-	List<String> genres;
-	List<String> durations;
-	String mainlandPubdate;
-	String id;
+  final CelebrityWorkWorksSubjectImages images;
+  @JsonKey(name: "original_title")
+  final String originalTitle;
+  final String year;
+  final List<CelebrityWorkWorksSubjectDirector> directors;
+  final CelebrityWorkWorksSubjectRating rating;
+  final String alt;
+  final String title;
+  @JsonKey(name: "collect_count")
+  final int collectCount;
+  @JsonKey(name: "has_video")
+  final bool hasVideo;
+  final List<String> pubdates;
+  final List<CelebrityWorkWorksSubjectCast> casts;
+  final String subtype;
+  final List<String> genres;
+  final List<String> durations;
+  @JsonKey(name: "mainland_pubdate")
+  final String mainlandPubdate;
+  final String id;
 
-	CelebrityWorkWorksSubject({this.images, this.originalTitle, this.year, this.directors, this.rating, this.alt, this.title, this.collectCount, this.hasVideo, this.pubdates, this.casts, this.subtype, this.genres, this.durations, this.mainlandPubdate, this.id});
+  const CelebrityWorkWorksSubject(
+      {this.images = const CelebrityWorkWorksSubjectImages(),
+      this.originalTitle = '',
+      this.year = '',
+      this.directors = const [],
+      this.rating = const CelebrityWorkWorksSubjectRating(),
+      this.alt = '',
+      this.title = '',
+      this.collectCount = 0,
+      this.hasVideo = false,
+      this.pubdates = const [],
+      this.casts = const [],
+      this.subtype = '',
+      this.genres = const [],
+      this.durations = const [],
+      this.mainlandPubdate = '',
+      this.id = ''});
 
-	CelebrityWorkWorksSubject.fromJson(Map<String, dynamic> json) {
-		images = json['images'] != null ? new CelebrityWorkWorksSubjectImages.fromJson(json['images']) : null;
-		originalTitle = json['original_title'];
-		year = json['year'];
-		if (json['directors'] != null) {
-			directors = new List<CelebrityWorkWorksSubjectDirector>();
-			json['directors'].forEach((v) { directors.add(new CelebrityWorkWorksSubjectDirector.fromJson(v)); });
-		}
-		rating = json['rating'] != null ? new CelebrityWorkWorksSubjectRating.fromJson(json['rating']) : null;
-		alt = json['alt'];
-		title = json['title'];
-		collectCount = json['collect_count'];
-		hasVideo = json['has_video'];
-		pubdates = json['pubdates'] == null ? null : [];
-
-		for (var pubdatesItem in pubdates == null ? [] : json['pubdates']){
-			pubdates.add(pubdatesItem);
-		}
-		if (json['casts'] != null) {
-			casts = new List<CelebrityWorkWorksSubjectCast>();
-			json['casts'].forEach((v) { casts.add(new CelebrityWorkWorksSubjectCast.fromJson(v)); });
-		}
-		subtype = json['subtype'];
-		genres = json['genres'].cast<String>();
-		durations = json['durations'] == null ? null : [];
-
-		for (var durationsItem in durations == null ? [] : json['durations']){
-			durations.add(durationsItem);
-		}
-		mainlandPubdate = json['mainland_pubdate'];
-		id = json['id'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		if (this.images != null) {
-      data['images'] = this.images.toJson();
-    }
-		data['original_title'] = this.originalTitle;
-		data['year'] = this.year;
-		if (this.directors != null) {
-      data['directors'] = this.directors.map((v) => v.toJson()).toList();
-    }
-		if (this.rating != null) {
-      data['rating'] = this.rating.toJson();
-    }
-		data['alt'] = this.alt;
-		data['title'] = this.title;
-		data['collect_count'] = this.collectCount;
-		data['has_video'] = this.hasVideo;
-//		if (this.pubdates != null) {
-//      data['pubdates'] = this.pubdates.map((v) => v.toJson()).toList();
-//    }
-		if (this.casts != null) {
-      data['casts'] = this.casts.map((v) => v.toJson()).toList();
-    }
-		data['subtype'] = this.subtype;
-		data['genres'] = this.genres;
-//		if (this.durations != null) {
-//      data['durations'] = this.durations.map((v) => v.toJson()).toList();
-//    }
-		data['mainland_pubdate'] = this.mainlandPubdate;
-		data['id'] = this.id;
-		return data;
-	}
+  factory CelebrityWorkWorksSubject.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubjectImages {
-	String small;
-	String large;
-	String medium;
+  final String small;
+  final String large;
+  final String medium;
 
-	CelebrityWorkWorksSubjectImages({this.small, this.large, this.medium});
+  const CelebrityWorkWorksSubjectImages({this.small = '', this.large = '', this.medium = ''});
 
-	CelebrityWorkWorksSubjectImages.fromJson(Map<String, dynamic> json) {
-		small = json['small'];
-		large = json['large'];
-		medium = json['medium'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['small'] = this.small;
-		data['large'] = this.large;
-		data['medium'] = this.medium;
-		return data;
-	}
+  factory CelebrityWorkWorksSubjectImages.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectImagesFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectImagesToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubjectDirector {
-	String name;
-	String alt;
-	String id;
-	CelebrityWorkWorksSubjectDirectorsAvatars avatars;
-	String nameEn;
+  final String name;
+  final String alt;
+  final String id;
+  final CelebrityWorkWorksSubjectDirectorsAvatars? avatars;
+  @JsonKey(name: 'name_en')
+  final String nameEn;
 
-	CelebrityWorkWorksSubjectDirector({this.name, this.alt, this.id, this.avatars, this.nameEn});
+  CelebrityWorkWorksSubjectDirector({this.name = '', this.alt = '', this.id = '', this.avatars, this.nameEn = ''});
 
-	CelebrityWorkWorksSubjectDirector.fromJson(Map<String, dynamic> json) {
-		name = json['name'];
-		alt = json['alt'];
-		id = json['id'];
-		avatars = json['avatars'] != null ? new CelebrityWorkWorksSubjectDirectorsAvatars.fromJson(json['avatars']) : null;
-		nameEn = json['name_en'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['name'] = this.name;
-		data['alt'] = this.alt;
-		data['id'] = this.id;
-		if (this.avatars != null) {
-      data['avatars'] = this.avatars.toJson();
-    }
-		data['name_en'] = this.nameEn;
-		return data;
-	}
+  factory CelebrityWorkWorksSubjectDirector.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectDirectorFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectDirectorToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubjectDirectorsAvatars {
-	String small;
-	String large;
-	String medium;
+  final String small;
+  final String large;
+  final String medium;
 
-	CelebrityWorkWorksSubjectDirectorsAvatars({this.small, this.large, this.medium});
+  CelebrityWorkWorksSubjectDirectorsAvatars({this.small = '', this.large = '', this.medium = ''});
 
-	CelebrityWorkWorksSubjectDirectorsAvatars.fromJson(Map<String, dynamic> json) {
-		small = json['small'];
-		large = json['large'];
-		medium = json['medium'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['small'] = this.small;
-		data['large'] = this.large;
-		data['medium'] = this.medium;
-		return data;
-	}
+  factory CelebrityWorkWorksSubjectDirectorsAvatars.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectDirectorsAvatarsFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectDirectorsAvatarsToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubjectRating {
-	var average;
-	var min;
-	var max;
-	CelebrityWorkWorksSubjectRatingDetails details;
-	String stars;
+  final average;
+  final min;
+  final max;
+  final CelebrityWorkWorksSubjectRatingDetails details;
+  final String stars;
 
-	CelebrityWorkWorksSubjectRating({this.average, this.min, this.max, this.details, this.stars});
+  const CelebrityWorkWorksSubjectRating(
+      {this.average, this.min, this.max, this.details = const CelebrityWorkWorksSubjectRatingDetails(), this.stars = ''});
 
-	CelebrityWorkWorksSubjectRating.fromJson(Map<String, dynamic> json) {
-		average = json['average'];
-		min = json['min'];
-		max = json['max'];
-		details = json['details'] != null ? new CelebrityWorkWorksSubjectRatingDetails.fromJson(json['details']) : null;
-		stars = json['stars'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['average'] = this.average;
-		data['min'] = this.min;
-		data['max'] = this.max;
-		if (this.details != null) {
-      data['details'] = this.details.toJson();
-    }
-		data['stars'] = this.stars;
-		return data;
-	}
+  factory CelebrityWorkWorksSubjectRating.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectRatingFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectRatingToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubjectRatingDetails {
-	var d1;
-	var d2;
-	var d3;
-	var d4;
-	var d5;
+  @JsonKey(name: '1')
+  final d1;
+  @JsonKey(name: '2')
+  final d2;
+  @JsonKey(name: '3')
+  final d3;
+  @JsonKey(name: '4')
+  final d4;
+  @JsonKey(name: '5')
+  final d5;
 
-	CelebrityWorkWorksSubjectRatingDetails({this.d1, this.d2, this.d3, this.d4, this.d5});
+  const CelebrityWorkWorksSubjectRatingDetails({this.d1, this.d2, this.d3, this.d4, this.d5});
 
-	CelebrityWorkWorksSubjectRatingDetails.fromJson(Map<String, dynamic> json) {
-		d1 = json['1'];
-		d2 = json['2'];
-		d3 = json['3'];
-		d4 = json['4'];
-		d5 = json['5'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['1'] = this.d1;
-		data['2'] = this.d2;
-		data['3'] = this.d3;
-		data['4'] = this.d4;
-		data['5'] = this.d5;
-		return data;
-	}
+  factory CelebrityWorkWorksSubjectRatingDetails.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectRatingDetailsFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectRatingDetailsToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubjectCast {
-	String name;
-	String alt;
-	String id;
-	CelebrityWorkWorksSubjectCastsAvatars avatars;
-	String nameEn;
+  final String name;
+  final String alt;
+  final String id;
+  final CelebrityWorkWorksSubjectCastsAvatars avatars;
+  final String nameEn;
 
-	CelebrityWorkWorksSubjectCast({this.name, this.alt, this.id, this.avatars, this.nameEn});
+  CelebrityWorkWorksSubjectCast(
+      {this.name = '', this.alt = '', this.id = '', this.avatars = const CelebrityWorkWorksSubjectCastsAvatars(), this.nameEn = ''});
 
-	CelebrityWorkWorksSubjectCast.fromJson(Map<String, dynamic> json) {
-		name = json['name'];
-		alt = json['alt'];
-		id = json['id'];
-		avatars = json['avatars'] != null ? new CelebrityWorkWorksSubjectCastsAvatars.fromJson(json['avatars']) : null;
-		nameEn = json['name_en'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['name'] = this.name;
-		data['alt'] = this.alt;
-		data['id'] = this.id;
-		if (this.avatars != null) {
-      data['avatars'] = this.avatars.toJson();
-    }
-		data['name_en'] = this.nameEn;
-		return data;
-	}
+  factory CelebrityWorkWorksSubjectCast.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectCastFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectCastToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CelebrityWorkWorksSubjectCastsAvatars {
-	String small;
-	String large;
-	String medium;
+  final String small;
+  final String large;
+  final String medium;
 
-	CelebrityWorkWorksSubjectCastsAvatars({this.small, this.large, this.medium});
+  const CelebrityWorkWorksSubjectCastsAvatars({this.small = '', this.large = '', this.medium = ''});
 
-	CelebrityWorkWorksSubjectCastsAvatars.fromJson(Map<String, dynamic> json) {
-		small = json['small'];
-		large = json['large'];
-		medium = json['medium'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['small'] = this.small;
-		data['large'] = this.large;
-		data['medium'] = this.medium;
-		return data;
-	}
+  factory CelebrityWorkWorksSubjectCastsAvatars.fromJson(Map<String, dynamic> json) => _$CelebrityWorkWorksSubjectCastsAvatarsFromJson(json);
+  Map<String, dynamic> toJson() => _$CelebrityWorkWorksSubjectCastsAvatarsToJson(this);
 }

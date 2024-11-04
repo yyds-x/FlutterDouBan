@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-
 ///点击图片放大显示
 class AnimalPhoto {
-  AnimalPhoto.show(BuildContext context, String url, {double width}) {
+  AnimalPhoto.show(BuildContext context, String url, {double? width}) {
     if (width == null) {
       width = MediaQuery.of(context).size.width;
     }
-    Navigator.of(context)
-        .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context) {
       return Container(
         // The blue background emphasizes that it's a new route.
         color: Colors.transparent,
@@ -16,7 +14,7 @@ class AnimalPhoto {
         alignment: Alignment.center,
         child: _PhotoHero(
           photo: url,
-          width: width,
+          width: width!,
           onTap: () {
             Navigator.of(context).pop();
           },
@@ -27,24 +25,23 @@ class AnimalPhoto {
 }
 
 class _PhotoHero extends StatelessWidget {
-  const _PhotoHero({Key key, this.photo, this.onTap, this.width})
-      : super(key: key);
+  const _PhotoHero({Key? key, this.photo, this.onTap, this.width}) : super(key: key);
 
-  final String photo;
-  final VoidCallback onTap;
-  final double width;
+  final String? photo;
+  final VoidCallback? onTap;
+  final double? width;
 
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       child: Hero(
-        tag: photo,
+        tag: photo!,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
             child: Image.network(
-              photo,
+              photo!,
               fit: BoxFit.contain,
             ),
           ),

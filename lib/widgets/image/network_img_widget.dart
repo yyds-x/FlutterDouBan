@@ -4,8 +4,7 @@ class NetworkImgWidget extends StatefulWidget {
   final imgUrl;
   final placeHolderAsset;
 
-  NetworkImgWidget({Key key, this.placeHolderAsset, this.imgUrl})
-      : super(key: key);
+  NetworkImgWidget({Key? key, this.placeHolderAsset, this.imgUrl}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -16,26 +15,24 @@ class NetworkImgWidget extends StatefulWidget {
 class _NetworkImgWidgetState extends State<NetworkImgWidget> {
   final imgUrl;
   final placeHolderAsset;
-  Image img, netImg;
+  Image? img, netImg;
   _NetworkImgWidgetState(this.placeHolderAsset, this.imgUrl);
 
   @override
   void initState() {
     super.initState();
     img = Image.asset(placeHolderAsset);
-    try{
+    try {
       netImg = Image.network(imgUrl);
-    }on Exception catch(e){
+    } on Exception catch (e) {
       print(e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
-      img,
-      netImg
-    ],);
+    return Stack(
+      children: <Widget>[img!, netImg!],
+    );
   }
-
 }

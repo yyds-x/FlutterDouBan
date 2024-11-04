@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:doubanapp/bean/subject_entity.dart';
 import 'package:doubanapp/http/API.dart';
 import 'package:doubanapp/router.dart';
-import 'package:doubanapp/bean/subject_entity.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class DouBanListView extends StatefulWidget {
-
-  DouBanListView({Key key}):super(key:key);
+  DouBanListView({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -14,8 +13,7 @@ class DouBanListView extends StatefulWidget {
   }
 }
 
-class DouBanState extends State<DouBanListView>
-    with AutomaticKeepAliveClientMixin {
+class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMixin {
   List<Subject> subjects = [];
   var api = API();
   var itemHeight = 150.0;
@@ -87,14 +85,9 @@ class DouBanState extends State<DouBanListView>
           ),
           Text(
             subject.title,
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-          Text('(${subject.year})',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey))
+          Text('(${subject.year})', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey))
         ],
       ),
     );
@@ -120,10 +113,8 @@ class DouBanState extends State<DouBanListView>
   //圆角图片
   getImage(var imgUrl) {
     return Container(
-      decoration: BoxDecoration(
-          image:
-              DecorationImage(image: NetworkImage(imgUrl), fit: BoxFit.cover),
-          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      decoration:
+          BoxDecoration(image: DecorationImage(image: NetworkImage(imgUrl), fit: BoxFit.cover), borderRadius: BorderRadius.all(Radius.circular(5.0))),
       margin: EdgeInsets.only(left: 8, top: 3, right: 8, bottom: 3),
       height: itemHeight,
       width: 100.0,
@@ -143,11 +134,7 @@ class DouBanState extends State<DouBanListView>
       height: itemHeight,
       alignment: Alignment.topLeft,
       child: Column(
-        children: <Widget>[
-          getTitleView(subject),
-          RatingBar(subject.rating.average),
-          DescWidget(subject)
-        ],
+        children: <Widget>[getTitleView(subject), RatingBar(subject.rating.average), DescWidget(subject)],
       ),
     );
   }
@@ -159,9 +146,7 @@ class DouBanState extends State<DouBanListView>
         'No.$no',
         style: TextStyle(color: Color.fromARGB(255, 133, 66, 0)),
       ),
-      decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 201, 129),
-          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      decoration: BoxDecoration(color: Color.fromARGB(255, 255, 201, 129), borderRadius: BorderRadius.all(Radius.circular(5.0))),
       padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
       margin: EdgeInsets.only(left: 12, top: 10),
     );
@@ -199,8 +184,7 @@ class DescWidget extends StatelessWidget {
       sb.write('${genres[i]}  ');
     }
     sb.write("/ ");
-    List<String> list = List.generate(
-        casts.length, (int index) => casts[index].name.toString());
+    List<String> list = List.generate(casts.length, (int index) => casts[index].name.toString());
 
     for (var i = 0; i < list.length; i++) {
       sb.write('${list[i]} ');
@@ -211,8 +195,7 @@ class DescWidget extends StatelessWidget {
         sb.toString(),
         softWrap: true,
         textDirection: TextDirection.ltr,
-        style:
-            TextStyle(fontSize: 16, color: Color.fromARGB(255, 118, 117, 118)),
+        style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 118, 117, 118)),
       ),
     );
   }
@@ -221,7 +204,7 @@ class DescWidget extends StatelessWidget {
 class RatingBar extends StatelessWidget {
   final stars;
 
-  RatingBar(this.stars, {Key key}) : super(key: key);
+  RatingBar(this.stars, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

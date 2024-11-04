@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:doubanapp/widgets/image/LaminatedImage.dart';
+import 'package:flutter/material.dart';
 
 ///今日可播放电影已更新 Widget
 class TodayPlayMovieWidget extends StatelessWidget {
   final urls;
   final backgroundColor;
-  TodayPlayMovieWidget(this.urls, {Key key, this.backgroundColor}) : super(key: key);
+  TodayPlayMovieWidget(this.urls, {Key? key, this.backgroundColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    if(urls == null || (urls.isEmpty)){
+    if (urls == null || (urls.isEmpty)) {
       return Container();
     }
     return Stack(
@@ -61,8 +60,7 @@ class TodayPlayMovieWidget extends StatelessWidget {
                             padding: EdgeInsets.only(top: 6.0),
                             child: Text(
                               '全部 30 > ',
-                              style:
-                                  TextStyle(fontSize: 13, color: Colors.white),
+                              style: TextStyle(fontSize: 13, color: Colors.white),
                             ),
                           )
                         ],

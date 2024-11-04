@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:doubanapp/bean/movie_detail_bean.dart';
 import 'package:doubanapp/constant/constant.dart';
 import 'package:doubanapp/pages/detail/look_confirm_button.dart';
+import 'package:flutter/material.dart';
 
 class DetailTitleWidget extends StatelessWidget {
   final MovieDetailBean bean;
   final Color shadowColor;
 
-  DetailTitleWidget(this.bean, this.shadowColor, {Key key}) : super(key: key);
+  DetailTitleWidget(this.bean, this.shadowColor, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,7 @@ class DetailTitleWidget extends StatelessWidget {
     var pubdates = list2String(bean.pubdates);
     var durations = list2String(bean.durations);
     //将按下的颜色设置较为浅色
-    var btnPressedColor =
-        Color.fromARGB(100, shadowColor.red, shadowColor.red, shadowColor.red);
+    var btnPressedColor = Color.fromARGB(100, shadowColor.red, shadowColor.red, shadowColor.red);
     return Row(
       children: <Widget>[
         Card(
@@ -47,10 +46,7 @@ class DetailTitleWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   bean.title,
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 22.0, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 5.0, bottom: 7.0),

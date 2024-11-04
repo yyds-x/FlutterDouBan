@@ -9,25 +9,24 @@ typedef BoolCallback = void Function(bool markAdded);
 ///点击图片变成订阅状态的缓存图片控件
 class SubjectMarkImageWidget extends StatefulWidget {
   final imgNetUrl;
-  final BoolCallback markAdd;
+  final BoolCallback? markAdd;
   var height;
   final width;
+
   ///360 x 513
 
-  SubjectMarkImageWidget(this.imgNetUrl,
-      {Key key, this.markAdd, this.width = 150.0})
-      : super(key: key);
+  SubjectMarkImageWidget(this.imgNetUrl, {Key? key, this.markAdd, this.width = 150.0}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     height = this.width / 150.0 * 210.0;
-    return _SubjectMarkImageState(imgNetUrl, markAdd, width, height);
+    return _SubjectMarkImageState(imgNetUrl, markAdd!, width, height);
   }
 }
 
 class _SubjectMarkImageState extends State<SubjectMarkImageWidget> {
   var markAdded = false;
-  String imgLocalPath, imgNetUrl;
+  String? imgLocalPath, imgNetUrl;
   final BoolCallback markAdd;
   var markAddedIcon, defaultMarkIcon;
   var loadImg;
@@ -57,11 +56,11 @@ class _SubjectMarkImageState extends State<SubjectMarkImageWidget> {
 
     loadImg = ClipRRect(
       child: CachedNetworkImage(
-        imageUrl: imgNetUrl,
+        imageUrl: imgNetUrl!,
         width: width,
         height: height,
         fit: BoxFit.fill,
-        placeholder: (BuildContext context, String url){
+        placeholder: (BuildContext context, String url) {
           return defaultImg;
         },
         fadeInDuration: const Duration(milliseconds: 80),
@@ -90,5 +89,4 @@ class _SubjectMarkImageState extends State<SubjectMarkImageWidget> {
       ],
     );
   }
-
 }

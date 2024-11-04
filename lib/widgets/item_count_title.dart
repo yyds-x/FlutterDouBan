@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:doubanapp/constant/text_size_constant.dart';
 import 'package:doubanapp/constant/color_constant.dart';
+import 'package:doubanapp/constant/text_size_constant.dart';
+import 'package:flutter/material.dart';
 
 typedef OnClick = void Function();
 
@@ -8,12 +8,11 @@ typedef OnClick = void Function();
 class ItemCountTitle extends StatelessWidget {
 //  final state = _ItemCountTitleState();
   final count;
-  final OnClick onClick;
+  final OnClick? onClick;
   final String title;
-  final double fontSize;
+  final double? fontSize;
 
-  ItemCountTitle(this.title, {Key key, this.onClick, this.count, this.fontSize})
-      : super(key: key);
+  ItemCountTitle(this.title, {Key? key, this.onClick, this.count, this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +23,22 @@ class ItemCountTitle extends StatelessWidget {
               child: Text(
             title,
             style: TextStyle(
-                fontSize: fontSize == null
-                    ? TextSizeConstant.BookAudioPartTabBar
-                    : fontSize,
+                fontSize: fontSize == null ? TextSizeConstant.BookAudioPartTabBar : fontSize,
                 fontWeight: FontWeight.bold,
                 color: ColorConstant.colorDefaultTitle),
           )),
           Text(
             '全部 ${count == null ? 0 : count} > ',
             style: TextStyle(
-                fontSize: 12, color: Colors.grey, ),
+              fontSize: 12,
+              color: Colors.grey,
+            ),
           )
         ],
       ),
       onTap: () {
         if (onClick != null) {
-          onClick();
+          onClick!();
         }
       },
     );

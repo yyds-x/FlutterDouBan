@@ -1,30 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:doubanapp/pages/movie/title_widget.dart';
-import 'package:doubanapp/pages/movie/today_play_movie_widget.dart';
-import 'package:doubanapp/http/API.dart';
-import 'package:doubanapp/pages/movie/hot_soon_tab_bar.dart';
-import 'package:doubanapp/widgets/item_count_title.dart';
-import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
+import 'dart:math' as math;
+
 import 'package:doubanapp/bean/subject_entity.dart';
 import 'package:doubanapp/bean/top_item_bean.dart';
-import 'package:doubanapp/widgets/rating_bar.dart';
 import 'package:doubanapp/constant/color_constant.dart';
-import 'dart:math' as math;
-import 'package:doubanapp/widgets/image/cache_img_radius.dart';
 import 'package:doubanapp/constant/constant.dart';
+import 'package:doubanapp/pages/movie/hot_soon_tab_bar.dart';
+import 'package:doubanapp/pages/movie/title_widget.dart';
+import 'package:doubanapp/pages/movie/today_play_movie_widget.dart';
 import 'package:doubanapp/pages/movie/top_item_widget.dart';
-import 'package:doubanapp/router.dart';
-//import 'package:palette_generator/palette_generator.dart';
-import 'package:flutter/rendering.dart';
 import 'package:doubanapp/repository/movie_repository.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:doubanapp/router.dart';
+import 'package:doubanapp/widgets/image/cache_img_radius.dart';
+import 'package:doubanapp/widgets/item_count_title.dart';
 import 'package:doubanapp/widgets/loading_widget.dart';
+import 'package:doubanapp/widgets/rating_bar.dart';
+import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
+import 'package:flutter/material.dart';
+
 ///书影音-电影
 ///这个Widget整个布局较为复杂
 ///整个是使用CustomScrollView内存放各种Slivers构成
 class MoviePage extends StatefulWidget {
-
-  MoviePage({Key key}):super(key:key);
+  MoviePage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -32,22 +29,22 @@ class MoviePage extends StatefulWidget {
   }
 }
 
-class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMixin {
-  Widget titleWidget, hotSoonTabBarPadding;
-  HotSoonTabBar hotSoonTabBar;
-  List<Subject> hotShowBeans = List(); //影院热映
-  List<Subject> comingSoonBeans = List(); //即将上映
-  List<Subject> hotBeans = List(); //豆瓣榜单
-  List<SubjectEntity> weeklyBeans = List(); //一周口碑电影榜
-  List<Subject> top250Beans = List(); //Top250
+class _MoviePageState extends State<MoviePage> with AutomaticKeepAliveClientMixin {
+  late Widget titleWidget, hotSoonTabBarPadding;
+  late HotSoonTabBar hotSoonTabBar;
+  List<Subject> hotShowBeans = []; //影院热映
+  List<Subject> comingSoonBeans = []; //即将上映
+  List<Subject> hotBeans = []; //豆瓣榜单
+  List<SubjectEntity> weeklyBeans = []; //一周口碑电影榜
+  List<Subject> top250Beans = []; //Top250
   var hotChildAspectRatio;
   var comingSoonChildAspectRatio;
   int selectIndex = 0; //选中的是热映、即将上映
   var itemW;
   var imgSize;
   List<String> todayUrls = [];
-  TopItemBean weeklyTopBean, weeklyHotBean, weeklyTop250Bean;
-  Color weeklyTopColor, weeklyHotColor, weeklyTop250Color;
+  TopItemBean? weeklyTopBean, weeklyHotBean, weeklyTop250Bean;
+  Color? weeklyTopColor, weeklyHotColor, weeklyTop250Color;
   Color todayPlayBg = Color.fromARGB(255, 47, 22, 74);
 
   @override
@@ -128,10 +125,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
 
                   ///多出的文本渐隐方式
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -139,8 +133,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
                 decoration: const ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                      side: BorderSide(color: ColorConstant.colorRed277),
-                      borderRadius: BorderRadius.all(Radius.circular(2.0))),
+                      side: BorderSide(color: ColorConstant.colorRed277), borderRadius: BorderRadius.all(Radius.circular(2.0))),
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -149,8 +142,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
                   ),
                   child: Text(
                     mainland_pubdate,
-                    style: TextStyle(
-                        fontSize: 8.0, color: ColorConstant.colorRed277),
+                    style: TextStyle(fontSize: 8.0, color: ColorConstant.colorRed277),
                   ),
                 ))
           ],
@@ -187,10 +179,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
 
                   ///多出的文本渐隐方式
                   overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -230,14 +219,11 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
           return _getHotMovieItem(hotBeans[index], itemW);
         }, childCount: math.min(hotBeans.length, 6)),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 0.0,
-            childAspectRatio: hotChildAspectRatio));
+            crossAxisCount: 3, crossAxisSpacing: 10.0, mainAxisSpacing: 0.0, childAspectRatio: hotChildAspectRatio));
   }
 
   ///R角图片
-  getCommonImg(String url, OnTab onTab) {
+  getCommonImg(String url, OnTab? onTab) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.only(top: 15.0),
@@ -259,19 +245,19 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
 
   void requestAPI() async {
     Future(() => (repository.requestAPI())).then((value) {
-      hotShowBeans = value.hotShowBeans;
-      comingSoonBeans = value.comingSoonBeans;
-      hotBeans = value.hotBeans;
-      weeklyBeans = value.weeklyBeans;
-      top250Beans = value.top250Beans;
-      todayUrls = value.todayUrls;
+      hotShowBeans = value.hotShowBeans ?? [];
+      comingSoonBeans = value.comingSoonBeans ?? [];
+      hotBeans = value.hotBeans ?? [];
+      weeklyBeans = value.weeklyBeans ?? [];
+      top250Beans = value.top250Beans ?? [];
+      todayUrls = value.todayUrls ?? [];
       weeklyTopBean = value.weeklyTopBean;
       weeklyHotBean = value.weeklyHotBean;
       weeklyTop250Bean = value.weeklyTop250Bean;
       weeklyTopColor = value.weeklyTopColor;
       weeklyHotColor = value.weeklyHotColor;
       weeklyTop250Color = value.weeklyTop250Color;
-      todayPlayBg = value.todayPlayBg;
+      todayPlayBg = value.todayPlayBg!;
       hotSoonTabBar.setCount(hotShowBeans);
       hotSoonTabBar.setComingSoon(comingSoonBeans);
 //      hotTitle.setCount(hotBeans.length);
@@ -294,8 +280,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
           ),
           SliverToBoxAdapter(
             child: Padding(
-              child:
-                  TodayPlayMovieWidget(todayUrls, backgroundColor: todayPlayBg),
+              child: TodayPlayMovieWidget(todayUrls, backgroundColor: todayPlayBg),
               padding: EdgeInsets.only(top: 22.0),
             ),
           ),
@@ -303,8 +288,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
             child: hotSoonTabBarPadding,
           ),
           SliverGrid(
-              delegate:
-                  SliverChildBuilderDelegate((BuildContext context, int index) {
+              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                 var hotMovieBean;
                 var comingSoonBean;
                 if (hotShowBeans.length > 0) {
@@ -317,24 +301,17 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
                   children: <Widget>[
                     Offstage(
                       child: _getComingSoonItem(comingSoonBean, itemW),
-                      offstage: !(selectIndex == 1 &&
-                          comingSoonBeans != null &&
-                          comingSoonBeans.length > 0),
+                      offstage: !(selectIndex == 1 && comingSoonBeans != null && comingSoonBeans.length > 0),
                     ),
                     Offstage(
                         child: _getHotMovieItem(hotMovieBean, itemW),
-                        offstage: !(selectIndex == 0 &&
-                            hotShowBeans != null &&
-                            hotShowBeans.length > 0))
+                        offstage: !(selectIndex == 0 && hotShowBeans != null && hotShowBeans.length > 0))
                   ],
                 );
               }, childCount: math.min(_getChildCount(), 6)),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 0.0,
-                  childAspectRatio: _getRadio())),
-          getCommonImg(Constant.IMG_TMP1, (){
+                  crossAxisCount: 3, crossAxisSpacing: 10.0, mainAxisSpacing: 0.0, childAspectRatio: _getRadio())),
+          getCommonImg(Constant.IMG_TMP1, () {
             MyRouter.pushNoParams(context, "http://www.flutterall.com");
           }),
           SliverToBoxAdapter(
@@ -365,19 +342,15 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
                 children: [
                   TopItemWidget(
                     title: '一周口碑电影榜',
-                    bean: weeklyTopBean,
-                    partColor: weeklyTopColor,
+                    bean: weeklyTopBean!,
+                    partColor: weeklyTopColor!,
                   ),
                   TopItemWidget(
                     title: '一周热门电影榜',
-                    bean: weeklyHotBean,
-                    partColor: weeklyHotColor,
+                    bean: weeklyHotBean!,
+                    partColor: weeklyHotColor!,
                   ),
-                  TopItemWidget(
-                    title: '豆瓣电影 Top250',
-                    bean: weeklyTop250Bean,
-                    partColor: weeklyTop250Color,
-                  )
+                  TopItemWidget(title: '豆瓣电影 Top250', bean: weeklyTop250Bean!, partColor: weeklyTop250Color!)
                 ],
                 scrollDirection: Axis.horizontal,
               ),

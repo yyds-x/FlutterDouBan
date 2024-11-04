@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:doubanapp/router.dart';
+import 'package:flutter/material.dart';
 
 typedef TapCallback = void Function();
 
@@ -48,12 +48,12 @@ class TitleWidget extends StatelessWidget {
 class _TextImgWidget extends StatelessWidget {
   final String text;
   final String imgAsset;
-  final TapCallback tabCallBack;
+  final TapCallback? tabCallBack;
 
   _TextImgWidget(
     this.text,
     this.imgAsset, {
-    Key key,
+    Key? key,
     this.tabCallBack,
   }) : super(key: key);
 
@@ -62,7 +62,7 @@ class _TextImgWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (tabCallBack != null) {
-          tabCallBack();
+          tabCallBack!();
         }
       },
       child: Column(

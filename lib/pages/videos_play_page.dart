@@ -1,21 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:doubanapp/widgets/video_widget.dart';
 import 'package:doubanapp/bean/movie_detail_bean.dart';
+import 'package:doubanapp/widgets/video_widget.dart';
+import 'package:flutter/material.dart';
 
 class VideoPlayPage extends StatefulWidget {
   final List<Blooper> beans;
 
-  VideoPlayPage(this.beans, {Key key}) : super(key: key);
+  VideoPlayPage(this.beans, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _VideoPlayPageState();
 }
 
 class _VideoPlayPageState extends State<VideoPlayPage> {
-  double mediumW, mediumH; //309 X 177
+  late double mediumW, mediumH; //309 X 177
   int _showPlayIndex = 0;
-  VideoWidget playWidget;
+  late VideoWidget playWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +65,7 @@ class _VideoPlayPageState extends State<VideoPlayPage> {
                               style: TextStyle(fontSize: 12.0),
                             ),
                           ),
-                          Text('${widget.beans.length}',
-                              style: TextStyle(fontSize: 12.0))
+                          Text('${widget.beans.length}', style: TextStyle(fontSize: 12.0))
                         ],
                       ),
                     );

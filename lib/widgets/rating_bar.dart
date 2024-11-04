@@ -6,8 +6,7 @@ class RatingBar extends StatelessWidget {
   final double fontSize;
   final color = Color.fromARGB(255, 255, 170, 71);
 
-  RatingBar(this.stars, {Key key, this.size = 18.0, this.fontSize = 13.0})
-      : super(key: key);
+  RatingBar(this.stars, {Key? key, this.size = 18.0, this.fontSize = 13.0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

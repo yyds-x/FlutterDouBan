@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 //import 'package:doubanapp/widgets/image/cached_network_image.dart';
 import 'package:doubanapp/constant/constant.dart';
 import 'package:doubanapp/widgets/video_progress_bar.dart';
+import 'package:flutter/material.dart';
 
 ///http://vt1.doubanio.com/201902111139/0c06a85c600b915d8c9cbdbbaf06ba9f/view/movie/M/302420330.mp4
 class VideoWidget extends StatefulWidget {
@@ -10,14 +10,9 @@ class VideoWidget extends StatefulWidget {
   final String previewImgUrl; //预览图片的地址
   final bool showProgressBar; //是否显示进度条
   final bool showProgressText; //是否显示进度文本
-  VideoWidget(this.url,
-      {Key key,
-      this.previewImgUrl,
-      this.showProgressBar = true,
-      this.showProgressText = true})
-      : super(key: key);
+  VideoWidget(this.url, {Key? key, this.previewImgUrl = '', this.showProgressBar = true, this.showProgressText = true}) : super(key: key);
 
-  _VideoWidgetState state;
+  late _VideoWidgetState state;
 
   @override
   State<StatefulWidget> createState() {
@@ -31,16 +26,16 @@ class VideoWidget extends StatefulWidget {
 }
 
 class _VideoWidgetState extends State<VideoWidget> {
-  VideoPlayerController _controller;
-  VoidCallback listener;
+  late VideoPlayerController _controller;
+  late VoidCallback listener;
   bool _showSeekBar = true;
+  late FadeAnimation imageFadeAnim;
 
   _VideoWidgetState() {
     listener = () {
       if (mounted) {
         setState(() {});
       }
-
     };
   }
 
@@ -50,7 +45,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     print('播放${widget.url}');
     _controller = VideoPlayerController.network(widget.url)
       ..initialize().then((_) {
-        if(mounted){
+        if (mounted) {
           //初始化完成后，更新状态
           setState(() {});
           if (_controller.value.duration == _controller.value.position) {
@@ -62,16 +57,11 @@ class _VideoWidgetState extends State<VideoWidget> {
     _controller.addListener(listener);
   }
 
-
-
   @override
   void deactivate() {
     _controller.removeListener(listener);
     super.deactivate();
   }
-
-
-  FadeAnimation imageFadeAnim;
 
   @override
   Widget build(BuildContext context) {
@@ -102,10 +92,8 @@ class _VideoWidgetState extends State<VideoWidget> {
     _controller.dispose(); //释放播放器资源
   }
 
-  Widget getPreviewImg() {
-    return widget.previewImgUrl.isNotEmpty
-        ? CachedNetworkImage(imageUrl: widget.previewImgUrl)
-        : null;
+  Widget? getPreviewImg() {
+    return widget.previewImgUrl.isNotEmpty ? CachedNetworkImage(imageUrl: widget.previewImgUrl) : null;
   }
 
   getMinuteSeconds(var inSeconds) {
@@ -132,12 +120,10 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   getDurationText() {
     var txt;
-    if (_controller.value.position == null ||
-        _controller.value.duration == null) {
+    if (_controller.value.position == null || _controller.value.duration == null) {
       txt = '00:00/00:00';
     } else {
-      txt =
-          '${getMinuteSeconds(_controller.value.position.inSeconds)}/${getMinuteSeconds(_controller.value.duration.inSeconds)}';
+      txt = '${getMinuteSeconds(_controller.value.position.inSeconds)}/${getMinuteSeconds(_controller.value.duration.inSeconds)}';
     }
     return Text(
       '$txt',
@@ -153,10 +139,7 @@ class _VideoWidgetState extends State<VideoWidget> {
           Align(
             child: IconButton(
                 iconSize: 55.0,
-                icon: Image.asset(Constant.ASSETS_IMG +
-                    (_controller.value.isPlaying
-                        ? 'ic_pause.png'
-                        : 'ic_playing.png')),
+                icon: Image.asset(Constant.ASSETS_IMG + (_controller.value.isPlaying ? 'ic_pause.png' : 'ic_playing.png')),
                 onPressed: () {
                   if (_controller.value.isPlaying) {
                     _controller.pause();
@@ -169,10 +152,7 @@ class _VideoWidgetState extends State<VideoWidget> {
           getProgressContent(),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Center(
-                child: _controller.value.isBuffering
-                    ? const CircularProgressIndicator()
-                    : null),
+            child: Center(child: _controller.value.isBuffering ? const CircularProgressIndicator() : null),
           )
         ],
       ),
@@ -181,7 +161,7 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   ///更新播放的URL
   void setUrl(String url) {
-    if(mounted){
+    if (mounted) {
       print('updateUrl');
       if (_controller != null) {
         _controller.removeListener(listener);
@@ -215,9 +195,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                       child: VideoProgressIndicator(
                         _controller,
                         allowScrubbing: true,
-                        colors: VideoProgressColors(
-                            playedColor: Colors.amberAccent,
-                            backgroundColor: Colors.grey),
+                        colors: VideoProgressColors(playedColor: Colors.amberAccent, backgroundColor: Colors.grey),
                       ),
                     ),
                   ),
@@ -234,25 +212,22 @@ class _VideoWidgetState extends State<VideoWidget> {
 }
 
 class FadeAnimation extends StatefulWidget {
-  FadeAnimation(
-      {this.child, this.duration = const Duration(milliseconds: 1500)});
+  FadeAnimation({this.child, this.duration = const Duration(milliseconds: 1500)});
 
-  final Widget child;
+  final Widget? child;
   final Duration duration;
 
   @override
   _FadeAnimationState createState() => _FadeAnimationState();
 }
 
-class _FadeAnimationState extends State<FadeAnimation>
-    with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+class _FadeAnimationState extends State<FadeAnimation> with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
-    animationController =
-        AnimationController(duration: widget.duration, vsync: this);
+    animationController = AnimationController(duration: widget.duration, vsync: this);
     animationController.addListener(() {
       if (mounted) {
         setState(() {});

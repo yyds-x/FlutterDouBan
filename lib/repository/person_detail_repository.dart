@@ -1,11 +1,11 @@
 import 'package:doubanapp/bean/celebrity_entity.dart';
 import 'package:doubanapp/bean/celebrity_work_entity.dart';
-import 'package:doubanapp/http/http_request.dart';
 import 'package:doubanapp/http/API.dart';
+import 'package:doubanapp/http/http_request.dart';
 
 class PersonDetailRepository {
-  CelebrityEntity celebrityEntity;
-  CelebrityWorkEntity celebrityWorkEntity;
+  CelebrityEntity? celebrityEntity;
+  CelebrityWorkEntity? celebrityWorkEntity;
   HttpRequest _httpRequest = HttpRequest(API.BASE_URL);
   PersonDetailRepository({this.celebrityEntity, this.celebrityWorkEntity});
 

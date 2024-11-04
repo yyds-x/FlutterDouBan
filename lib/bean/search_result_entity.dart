@@ -1,243 +1,141 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'search_result_entity.g.dart';
+
+@JsonSerializable()
+@CopyWith()
 class SearchResultEntity {
-	int total;
-	List<SearchResultSubject> subjects;
-	int count;
-	int start;
-	String title;
+  final int total;
+  final List<SearchResultSubject> subjects;
+  final int count;
+  final int start;
+  final String title;
 
-	SearchResultEntity({this.total, this.subjects, this.count, this.start, this.title});
+  SearchResultEntity({this.total = 0, this.subjects = const [], this.count = 0, this.start = 0, this.title = ''});
 
-	SearchResultEntity.fromJson(Map<String, dynamic> json) {
-		total = json['total'];
-		if (json['subjects'] != null) {
-			subjects = new List<SearchResultSubject>();
-			json['subjects'].forEach((v) { subjects.add(new SearchResultSubject.fromJson(v)); });
-		}
-		count = json['count'];
-		start = json['start'];
-		title = json['title'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['total'] = this.total;
-		if (this.subjects != null) {
-      data['subjects'] = this.subjects.map((v) => v.toJson()).toList();
-    }
-		data['count'] = this.count;
-		data['start'] = this.start;
-		data['title'] = this.title;
-		return data;
-	}
+  factory SearchResultEntity.fromJson(Map<String, dynamic> json) => _$SearchResultEntityFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResultEntityToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class SearchResultSubject {
-	SearchResultSubjectsImages images;
-	String originalTitle;
-	String year;
-	List<SearchResultSubjectsDirector> directors;
-	SearchResultSubjectsRating rating;
-	String alt;
-	String title;
-	int collectCount;
-	bool hasVideo;
-	List<String> pubdates;
-	List<SearchResultSubjectsCast> casts;
-	String subtype;
-	List<String> genres;
-	List<String> durations;
-	String mainlandPubdate;
-	String id;
+  final SearchResultSubjectsImages images;
+  final String originalTitle;
+  final String year;
+  final List<SearchResultSubjectsDirector> directors;
+  final SearchResultSubjectsRating rating;
+  final String alt;
+  final String title;
+  final int collectCount;
+  final bool hasVideo;
+  final List<String> pubdates;
+  final List<SearchResultSubjectsCast> casts;
+  final String subtype;
+  final List<String> genres;
+  final List<String> durations;
+  final String mainlandPubdate;
+  final String id;
 
-	SearchResultSubject({this.images, this.originalTitle, this.year, this.directors, this.rating, this.alt, this.title, this.collectCount, this.hasVideo, this.pubdates, this.casts, this.subtype, this.genres, this.durations, this.mainlandPubdate, this.id});
+  SearchResultSubject(
+      {this.images = const SearchResultSubjectsImages(),
+      this.originalTitle = "",
+      this.year = "",
+      this.directors = const [],
+      this.rating = const SearchResultSubjectsRating(),
+      this.alt = '',
+      this.title = '',
+      this.collectCount = 0,
+      this.hasVideo = false,
+      this.pubdates = const [],
+      this.casts = const [],
+      this.subtype = '',
+      this.genres = const [],
+      this.durations = const [],
+      this.mainlandPubdate = '',
+      this.id = ''});
 
-	SearchResultSubject.fromJson(Map<String, dynamic> json) {
-		images = json['images'] != null ? new SearchResultSubjectsImages.fromJson(json['images']) : null;
-		originalTitle = json['original_title'];
-		year = json['year'];
-		if (json['directors'] != null) {
-			directors = new List<SearchResultSubjectsDirector>();
-			json['directors'].forEach((v) { directors.add(new SearchResultSubjectsDirector.fromJson(v)); });
-		}
-		rating = json['rating'] != null ? new SearchResultSubjectsRating.fromJson(json['rating']) : null;
-		alt = json['alt'];
-		title = json['title'];
-		collectCount = json['collect_count'];
-		hasVideo = json['has_video'];
-		pubdates = json['pubdates'].cast<String>();
-		if (json['casts'] != null) {
-			casts = new List<SearchResultSubjectsCast>();
-			json['casts'].forEach((v) { casts.add(new SearchResultSubjectsCast.fromJson(v)); });
-		}
-		subtype = json['subtype'];
-		genres = json['genres'].cast<String>();
-		durations = json['durations'].cast<String>();
-		mainlandPubdate = json['mainland_pubdate'];
-		id = json['id'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		if (this.images != null) {
-      data['images'] = this.images.toJson();
-    }
-		data['original_title'] = this.originalTitle;
-		data['year'] = this.year;
-		if (this.directors != null) {
-      data['directors'] = this.directors.map((v) => v.toJson()).toList();
-    }
-		if (this.rating != null) {
-      data['rating'] = this.rating.toJson();
-    }
-		data['alt'] = this.alt;
-		data['title'] = this.title;
-		data['collect_count'] = this.collectCount;
-		data['has_video'] = this.hasVideo;
-		data['pubdates'] = this.pubdates;
-		if (this.casts != null) {
-      data['casts'] = this.casts.map((v) => v.toJson()).toList();
-    }
-		data['subtype'] = this.subtype;
-		data['genres'] = this.genres;
-		data['durations'] = this.durations;
-		data['mainland_pubdate'] = this.mainlandPubdate;
-		data['id'] = this.id;
-		return data;
-	}
+  factory SearchResultSubject.fromJson(Map<String, dynamic> json) => _$SearchResultSubjectFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResultSubjectToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class SearchResultSubjectsImages {
-	String small;
-	String large;
-	String medium;
+  final String small;
+  final String large;
+  final String medium;
 
-	SearchResultSubjectsImages({this.small, this.large, this.medium});
+  const SearchResultSubjectsImages({this.small = '', this.large = '', this.medium = ''});
 
-	SearchResultSubjectsImages.fromJson(Map<String, dynamic> json) {
-		small = json['small'];
-		large = json['large'];
-		medium = json['medium'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['small'] = this.small;
-		data['large'] = this.large;
-		data['medium'] = this.medium;
-		return data;
-	}
+  factory SearchResultSubjectsImages.fromJson(Map<String, dynamic> json) => _$SearchResultSubjectsImagesFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResultSubjectsImagesToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class SearchResultSubjectsDirector {
-	var name;
-	var alt;
-	var id;
-	var avatars;
-	var nameEn;
+  final name;
+  final alt;
+  final id;
+  final avatars;
+  @JsonKey(name: "name_en")
+  final nameEn;
 
-	SearchResultSubjectsDirector({this.name, this.alt, this.id, this.avatars, this.nameEn});
+  const SearchResultSubjectsDirector({this.name, this.alt, this.id, this.avatars, this.nameEn});
 
-	SearchResultSubjectsDirector.fromJson(Map<String, dynamic> json) {
-		name = json['name'];
-		alt = json['alt'];
-		id = json['id'];
-		avatars = json['avatars'];
-		nameEn = json['name_en'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['name'] = this.name;
-		data['alt'] = this.alt;
-		data['id'] = this.id;
-		data['avatars'] = this.avatars;
-		data['name_en'] = this.nameEn;
-		return data;
-	}
+  factory SearchResultSubjectsDirector.fromJson(Map<String, dynamic> json) => _$SearchResultSubjectsDirectorFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResultSubjectsDirectorToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class SearchResultSubjectsRating {
-	var average;
-	var min;
-	var max;
-	SearchResultSubjectsRatingDetails details;
-	String stars;
+  final average;
+  final min;
+  final max;
+  final SearchResultSubjectsRatingDetails details;
+  final String stars;
 
-	SearchResultSubjectsRating({this.average, this.min, this.max, this.details, this.stars});
+  const SearchResultSubjectsRating({this.average, this.min, this.max, this.details = const SearchResultSubjectsRatingDetails(), this.stars = ''});
 
-	SearchResultSubjectsRating.fromJson(Map<String, dynamic> json) {
-		average = json['average'];
-		min = json['min'];
-		max = json['max'];
-		details = json['details'] != null ? new SearchResultSubjectsRatingDetails.fromJson(json['details']) : null;
-		stars = json['stars'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['average'] = this.average;
-		data['min'] = this.min;
-		data['max'] = this.max;
-		if (this.details != null) {
-      data['details'] = this.details.toJson();
-    }
-		data['stars'] = this.stars;
-		return data;
-	}
+  factory SearchResultSubjectsRating.fromJson(Map<String, dynamic> json) => _$SearchResultSubjectsRatingFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResultSubjectsRatingToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class SearchResultSubjectsRatingDetails {
-	var d1;
-	var d2;
-	var d3;
-	var d4;
-	var d5;
+  @JsonKey(name: "1")
+  final d1;
+  @JsonKey(name: "2")
+  final d2;
+  @JsonKey(name: "3")
+  final d3;
+  @JsonKey(name: "4")
+  final d4;
+  @JsonKey(name: "5")
+  final d5;
 
-	SearchResultSubjectsRatingDetails({this.d1, this.d2, this.d3, this.d4, this.d5});
+  const SearchResultSubjectsRatingDetails({this.d1, this.d2, this.d3, this.d4, this.d5});
 
-	SearchResultSubjectsRatingDetails.fromJson(Map<String, dynamic> json) {
-		d1 = json['1'];
-		d2 = json['2'];
-		d3 = json['3'];
-		d4 = json['4'];
-		d5 = json['5'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['1'] = this.d1;
-		data['2'] = this.d2;
-		data['3'] = this.d3;
-		data['4'] = this.d4;
-		data['5'] = this.d5;
-		return data;
-	}
+  factory SearchResultSubjectsRatingDetails.fromJson(Map<String, dynamic> json) => _$SearchResultSubjectsRatingDetailsFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResultSubjectsRatingDetailsToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class SearchResultSubjectsCast {
-	String name;
-	var alt;
-	var id;
-	var avatars;
-	String nameEn;
+  final String name;
+  final alt;
+  final id;
+  final avatars;
+  @JsonKey(name: "name_en")
+  final String nameEn;
 
-	SearchResultSubjectsCast({this.name, this.alt, this.id, this.avatars, this.nameEn});
+  SearchResultSubjectsCast({this.name = '', this.alt, this.id, this.avatars, this.nameEn = ''});
 
-	SearchResultSubjectsCast.fromJson(Map<String, dynamic> json) {
-		name = json['name'];
-		alt = json['alt'];
-		id = json['id'];
-		avatars = json['avatars'];
-		nameEn = json['name_en'];
-	}
-
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		data['name'] = this.name;
-		data['alt'] = this.alt;
-		data['id'] = this.id;
-		data['avatars'] = this.avatars;
-		data['name_en'] = this.nameEn;
-		return data;
-	}
+  factory SearchResultSubjectsCast.fromJson(Map<String, dynamic> json) => _$SearchResultSubjectsCastFromJson(json);
+  Map<String, dynamic> toJson() => _$SearchResultSubjectsCastToJson(this);
 }

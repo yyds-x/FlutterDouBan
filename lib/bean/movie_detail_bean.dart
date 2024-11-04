@@ -1,345 +1,205 @@
-import 'dart:convert' show json;
+import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'movie_detail_bean.g.dart';
+
+@JsonSerializable()
+@CopyWith()
 
 ///影视条目详情
 class MovieDetailBean {
+  final bool collection;
+  final String current_season;
+  final do_count;
+  final episodes_count;
+  final seasons_count;
+  final collect_count;
+  final comments_count;
+  final photos_count;
+  final ratings_count;
+  final reviews_count;
+  final wish_count;
+  final bool has_schedule;
+  final bool has_ticket;
+  final bool has_video;
+  final String alt;
+  final String douban_site;
+  final String id;
+  final String mainland_pubdate;
+  final String mobile_url;
+  final String original_title;
+  final String pubdate;
+  final String schedule_url;
+  final String share_url;
+  final String subtype;
+  final String summary;
+  final String title;
+  final String website;
+  final String year;
 
-  bool collection;
-  String current_season;
-  var do_count;
-  var episodes_count;
-  var seasons_count;
-  var collect_count;
-  var comments_count;
-  var photos_count;
-  var ratings_count;
-  var reviews_count;
-  var wish_count;
-  bool has_schedule;
-  bool has_ticket;
-  bool has_video;
-  String alt;
-  String douban_site;
-  String id;
-  String mainland_pubdate;
-  String mobile_url;
-  String original_title;
-  String pubdate;
-  String schedule_url;
-  String share_url;
-  String subtype;
-  String summary;
-  String title;
-  String website;
-  String year;
-  List<String> aka;
-  List<String> blooper_urls;
-  List<Blooper> bloopers;
-  List<Cast> casts;
-  List<dynamic> clip_urls;
-  List<dynamic> clips;
-  List<String> countries;
-  List<Director> directors;
-  List<String> durations;
-  List<String> genres;
-  List<String> languages;
-  List<Photo> photos;
-  List<PopularComment> popular_comments;
-  List<PopularReview> popular_reviews;
-  List<String> pubdates;
-  List<String> tags;
-  List<String> trailer_urls;
-  List<Blooper> trailers;
-  List<dynamic> videos;
-  List<Writer> writers;
-  _Image images;
-  Rating rating;
+  final List<String> aka;
+  final List<String> blooper_urls;
+  final List<Blooper> bloopers;
+  final List<Cast> casts;
+  final List<dynamic> clip_urls;
+  final List<dynamic> clips;
+  final List<String> countries;
+  final List<Director> directors;
+  final List<String> durations;
+  final List<String> genres;
+  final List<String> languages;
+  final List<Photo> photos;
+  final List<PopularComment> popular_comments;
+  final List<PopularReview> popular_reviews;
+  final List<String> pubdates;
+  final List<String> tags;
+  final List<String> trailer_urls;
+  final List<Blooper> trailers;
+  final List<dynamic> videos;
+  final List<Writer> writers;
+  final _Image images;
+  final Rating rating;
 
-  MovieDetailBean.fromParams({this.collection, this.current_season, this.do_count, this.episodes_count, this.seasons_count, this.collect_count, this.comments_count, this.photos_count, this.ratings_count, this.reviews_count, this.wish_count, this.has_schedule, this.has_ticket, this.has_video, this.alt, this.douban_site, this.id, this.mainland_pubdate, this.mobile_url, this.original_title, this.pubdate, this.schedule_url, this.share_url, this.subtype, this.summary, this.title, this.website, this.year, this.aka, this.blooper_urls, this.bloopers, this.casts, this.clip_urls, this.clips, this.countries, this.directors, this.durations, this.genres, this.languages, this.photos, this.popular_comments, this.popular_reviews, this.pubdates, this.tags, this.trailer_urls, this.trailers, this.videos, this.writers, this.images, this.rating});
+  MovieDetailBean(
+      {this.collection = false,
+      this.current_season = '',
+      this.do_count,
+      this.episodes_count,
+      this.seasons_count,
+      this.collect_count,
+      this.comments_count,
+      this.photos_count,
+      this.ratings_count,
+      this.reviews_count,
+      this.wish_count,
+      this.has_schedule = false,
+      this.has_ticket = false,
+      this.has_video = false,
+      this.alt = '',
+      this.douban_site = '',
+      this.id = '',
+      this.mainland_pubdate = '',
+      this.mobile_url = '',
+      this.original_title = '',
+      this.pubdate = '',
+      this.schedule_url = '',
+      this.share_url = '',
+      this.subtype = '',
+      this.summary = '',
+      this.title = '',
+      this.website = '',
+      this.year = '',
+      this.aka = const [],
+      this.blooper_urls = const [],
+      this.bloopers = const [],
+      this.casts = const [],
+      this.clip_urls = const [],
+      this.clips = const [],
+      this.countries = const [],
+      this.directors = const [],
+      this.durations = const [],
+      this.genres = const [],
+      this.languages = const [],
+      this.photos = const [],
+      this.popular_comments = const [],
+      this.popular_reviews = const [],
+      this.pubdates = const [],
+      this.tags = const [],
+      this.trailer_urls = const [],
+      this.trailers = const [],
+      this.videos = const [],
+      this.writers = const [],
+      this.images = const _Image(),
+      this.rating = const Rating()});
 
-  factory MovieDetailBean(jsonStr) => jsonStr == null ? null : jsonStr is String ? new MovieDetailBean.fromJson(json.decode(jsonStr)) : new MovieDetailBean.fromJson(jsonStr);
-
-  MovieDetailBean.fromJson(jsonRes) {
-    collection = jsonRes['collection'];
-    current_season = jsonRes['current_season'];
-    do_count = jsonRes['do_count'];
-    episodes_count = jsonRes['episodes_count'];
-    seasons_count = jsonRes['seasons_count'];
-    collect_count = jsonRes['collect_count'];
-    comments_count = jsonRes['comments_count'];
-    photos_count = jsonRes['photos_count'];
-    ratings_count = jsonRes['ratings_count'];
-    reviews_count = jsonRes['reviews_count'];
-    wish_count = jsonRes['wish_count'];
-    has_schedule = jsonRes['has_schedule'];
-    has_ticket = jsonRes['has_ticket'];
-    has_video = jsonRes['has_video'];
-    alt = jsonRes['alt'];
-    douban_site = jsonRes['douban_site'];
-    id = jsonRes['id'];
-    mainland_pubdate = jsonRes['mainland_pubdate'];
-    mobile_url = jsonRes['mobile_url'];
-    original_title = jsonRes['original_title'];
-    pubdate = jsonRes['pubdate'];
-    schedule_url = jsonRes['schedule_url'];
-    share_url = jsonRes['share_url'];
-    subtype = jsonRes['subtype'];
-    summary = jsonRes['summary'];
-    title = jsonRes['title'];
-    website = jsonRes['website'];
-    year = jsonRes['year'];
-    aka = jsonRes['aka'] == null ? null : [];
-
-    for (var akaItem in aka == null ? [] : jsonRes['aka']){
-      aka.add(akaItem);
-    }
-
-    blooper_urls = jsonRes['blooper_urls'] == null ? null : [];
-
-    for (var blooper_urlsItem in blooper_urls == null ? [] : jsonRes['blooper_urls']){
-      blooper_urls.add(blooper_urlsItem);
-    }
-
-    bloopers = jsonRes['bloopers'] == null ? null : [];
-
-    for (var bloopersItem in bloopers == null ? [] : jsonRes['bloopers']){
-      bloopers.add(bloopersItem == null ? null : new Blooper.fromJson(bloopersItem));
-    }
-
-    casts = jsonRes['casts'] == null ? null : [];
-
-    for (var castsItem in casts == null ? [] : jsonRes['casts']){
-      casts.add(castsItem == null ? null : new Cast.fromJson(castsItem));
-    }
-
-    clip_urls = jsonRes['clip_urls'] == null ? null : [];
-
-    for (var clip_urlsItem in clip_urls == null ? [] : jsonRes['clip_urls']){
-      clip_urls.add(clip_urlsItem);
-    }
-
-    clips = jsonRes['clips'] == null ? null : [];
-
-    for (var clipsItem in clips == null ? [] : jsonRes['clips']){
-      clips.add(clipsItem);
-    }
-
-    countries = jsonRes['countries'] == null ? null : [];
-
-    for (var countriesItem in countries == null ? [] : jsonRes['countries']){
-      countries.add(countriesItem);
-    }
-
-    directors = jsonRes['directors'] == null ? null : [];
-
-    for (var directorsItem in directors == null ? [] : jsonRes['directors']){
-      directors.add(directorsItem == null ? null : new Director.fromJson(directorsItem));
-    }
-
-    durations = jsonRes['durations'] == null ? null : [];
-
-    for (var durationsItem in durations == null ? [] : jsonRes['durations']){
-      durations.add(durationsItem);
-    }
-
-    genres = jsonRes['genres'] == null ? null : [];
-
-    for (var genresItem in genres == null ? [] : jsonRes['genres']){
-      genres.add(genresItem);
-    }
-
-    languages = jsonRes['languages'] == null ? null : [];
-
-    for (var languagesItem in languages == null ? [] : jsonRes['languages']){
-      languages.add(languagesItem);
-    }
-
-    photos = jsonRes['photos'] == null ? null : [];
-
-    for (var photosItem in photos == null ? [] : jsonRes['photos']){
-      photos.add(photosItem == null ? null : new Photo.fromJson(photosItem));
-    }
-
-    popular_comments = jsonRes['popular_comments'] == null ? null : [];
-
-    for (var popular_commentsItem in popular_comments == null ? [] : jsonRes['popular_comments']){
-      popular_comments.add(popular_commentsItem == null ? null : new PopularComment.fromJson(popular_commentsItem));
-    }
-
-    popular_reviews = jsonRes['popular_reviews'] == null ? null : [];
-
-    for (var popular_reviewsItem in popular_reviews == null ? [] : jsonRes['popular_reviews']){
-      popular_reviews.add(popular_reviewsItem == null ? null : new PopularReview.fromJson(popular_reviewsItem));
-    }
-
-    pubdates = jsonRes['pubdates'] == null ? null : [];
-
-    for (var pubdatesItem in pubdates == null ? [] : jsonRes['pubdates']){
-      pubdates.add(pubdatesItem);
-    }
-
-    tags = jsonRes['tags'] == null ? null : [];
-
-    for (var tagsItem in tags == null ? [] : jsonRes['tags']){
-      tags.add(tagsItem);
-    }
-
-    trailer_urls = jsonRes['trailer_urls'] == null ? null : [];
-
-    for (var trailer_urlsItem in trailer_urls == null ? [] : jsonRes['trailer_urls']){
-      trailer_urls.add(trailer_urlsItem);
-    }
-
-    trailers = jsonRes['trailers'] == null ? null : [];
-
-    for (var trailersItem in trailers == null ? [] : jsonRes['trailers']){
-      trailers.add(trailersItem == null ? null : new Blooper.fromJson(trailersItem));
-    }
-
-    videos = jsonRes['videos'] == null ? null : [];
-
-    for (var videosItem in videos == null ? [] : jsonRes['videos']){
-      videos.add(videosItem);
-    }
-
-    writers = jsonRes['writers'] == null ? null : [];
-
-    for (var writersItem in writers == null ? [] : jsonRes['writers']){
-      writers.add(writersItem == null ? null : new Writer.fromJson(writersItem));
-    }
-
-    images = jsonRes['images'] == null ? null : new _Image.fromJson(jsonRes['images']);
-    rating = jsonRes['rating'] == null ? null : new Rating.fromJson(jsonRes['rating']);
-  }
-
-  @override
-  String toString() {
-    return '{"collection": $collection,"current_season": ${current_season != null?'${json.encode(current_season)}':'null'},"do_count": $do_count,"episodes_count": $episodes_count,"seasons_count": $seasons_count,"collect_count": $collect_count,"comments_count": $comments_count,"photos_count": $photos_count,"ratings_count": $ratings_count,"reviews_count": $reviews_count,"wish_count": $wish_count,"has_schedule": $has_schedule,"has_ticket": $has_ticket,"has_video": $has_video,"alt": ${alt != null?'${json.encode(alt)}':'null'},"douban_site": ${douban_site != null?'${json.encode(douban_site)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"mainland_pubdate": ${mainland_pubdate != null?'${json.encode(mainland_pubdate)}':'null'},"mobile_url": ${mobile_url != null?'${json.encode(mobile_url)}':'null'},"original_title": ${original_title != null?'${json.encode(original_title)}':'null'},"pubdate": ${pubdate != null?'${json.encode(pubdate)}':'null'},"schedule_url": ${schedule_url != null?'${json.encode(schedule_url)}':'null'},"share_url": ${share_url != null?'${json.encode(share_url)}':'null'},"subtype": ${subtype != null?'${json.encode(subtype)}':'null'},"summary": ${summary != null?'${json.encode(summary)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},"website": ${website != null?'${json.encode(website)}':'null'},"year": ${year != null?'${json.encode(year)}':'null'},"aka": $aka,"blooper_urls": $blooper_urls,"bloopers": $bloopers,"casts": $casts,"clip_urls": $clip_urls,"clips": $clips,"countries": $countries,"directors": $directors,"durations": $durations,"genres": $genres,"languages": $languages,"photos": $photos,"popular_comments": $popular_comments,"popular_reviews": $popular_reviews,"pubdates": $pubdates,"tags": $tags,"trailer_urls": $trailer_urls,"trailers": $trailers,"videos": $videos,"writers": $writers,"images": $images,"rating": $rating}';
-  }
+  factory MovieDetailBean.fromJson(Map<String, dynamic> json) => _$MovieDetailBeanFromJson(json);
+  Map<String, dynamic> toJson() => _$MovieDetailBeanToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Rating {
+  final max;
+  final min;
+  final average;
+  final String stars;
+  final RatingDetails details;
 
-  var max;
-  var min;
-  var average;
-  String stars;
-  RatingDetails details;
+  const Rating({this.max, this.min, this.average, this.stars = '', this.details = const RatingDetails()});
 
-  Rating.fromParams({this.max, this.min, this.average, this.stars, this.details});
-
-  Rating.fromJson(jsonRes) {
-    max = jsonRes['max'];
-    min = jsonRes['min'];
-    average = jsonRes['average'];
-    stars = jsonRes['stars'];
-    details = jsonRes['details'] == null ? null : new RatingDetails.fromJson(jsonRes['details']);
-  }
-
-  @override
-  String toString() {
-    return '{"max": $max,"min": $min,"average": $average,"stars": ${stars != null?'${json.encode(stars)}':'null'},"details": $details}';
-  }
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class RatingDetails {
+  @JsonKey(name: '1')
+  final d1;
+  @JsonKey(name: '2')
+  final d2;
+  @JsonKey(name: '3')
+  final d3;
+  @JsonKey(name: '4')
+  final d4;
+  @JsonKey(name: '5')
+  final d5;
 
-  var d1;
-  var d2;
-  var d3;
-  var d4;
-  var d5;
-
-  RatingDetails.fromParams({this.d1, this.d2, this.d3, this.d4, this.d5});
-
-  RatingDetails.fromJson(jsonRes) {
-    d1 = jsonRes['1'];
-    d2 = jsonRes['2'];
-    d3 = jsonRes['3'];
-    d4 = jsonRes['4'];
-    d5 = jsonRes['5'];
-  }
-
-  @override
-  String toString() {
-    return '{"1": $d1,"2": $d2,"3": $d3,"4": $d4,"5": $d5}';
-  }
+  const RatingDetails({this.d1, this.d2, this.d3, this.d4, this.d5});
+  factory RatingDetails.fromJson(Map<String, dynamic> json) => _$RatingDetailsFromJson(json);
+  Map<String, dynamic> toJson() => _$RatingDetailsToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class _Image {
+  final String large;
+  final String medium;
+  final String small;
 
-  String large;
-  String medium;
-  String small;
-
-  _Image.fromParams({this.large, this.medium, this.small});
-
-  _Image.fromJson(jsonRes) {
-    large = jsonRes['large'];
-    medium = jsonRes['medium'];
-    small = jsonRes['small'];
-  }
-
-  @override
-  String toString() {
-    return '{"large": ${large != null?'${json.encode(large)}':'null'},"medium": ${medium != null?'${json.encode(medium)}':'null'},"small": ${small != null?'${json.encode(small)}':'null'}}';
-  }
+  const _Image({this.large = "", this.medium = "", this.small = ""});
+  factory _Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+  Map<String, dynamic> toJson() => _$ImageToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Writer {
+  final String alt;
+  final String id;
+  final String name;
+  final String name_en;
+  final WriterAvatars avatars;
 
-  String alt;
-  String id;
-  String name;
-  String name_en;
-  WriterAvatars avatars;
-
-  Writer.fromParams({this.alt, this.id, this.name, this.name_en, this.avatars});
-
-  Writer.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    id = jsonRes['id'];
-    name = jsonRes['name'];
-    name_en = jsonRes['name_en'];
-    avatars = jsonRes['avatars'] == null ? null : new WriterAvatars.fromJson(jsonRes['avatars']);
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"name": ${name != null?'${json.encode(name)}':'null'},"name_en": ${name_en != null?'${json.encode(name_en)}':'null'},"avatars": $avatars}';
-  }
+  Writer({this.alt = "", this.id = "", this.name = "", this.name_en = '', this.avatars = const WriterAvatars()});
+  factory Writer.fromJson(Map<String, dynamic> json) => _$WriterFromJson(json);
+  Map<String, dynamic> toJson() => _$WriterToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class WriterAvatars {
+  final String large;
+  final String medium;
+  final String small;
 
-  String large;
-  String medium;
-  String small;
+  const WriterAvatars({this.large = "", this.medium = "", this.small = ""});
 
-  WriterAvatars.fromParams({this.large, this.medium, this.small});
-
-  WriterAvatars.fromJson(jsonRes) {
-    large = jsonRes['large'];
-    medium = jsonRes['medium'];
-    small = jsonRes['small'];
-  }
-
-  @override
-  String toString() {
-    return '{"large": ${large != null?'${json.encode(large)}':'null'},"medium": ${medium != null?'${json.encode(medium)}':'null'},"small": ${small != null?'${json.encode(small)}':'null'}}';
-  }
+  factory WriterAvatars.fromJson(Map<String, dynamic> json) => _$WriterAvatarsFromJson(json);
+  Map<String, dynamic> toJson() => _$WriterAvatarsToJson(this);
 }
 
 //class Trailer {
 //
-//  String alt;
-//  String id;
-//  String medium;
-//  String resource_url;
-//  String small;
-//  String subject_id;
-//  String title;
+//final String alt;
+//final String id;
+//final String medium;
+//final String resource_url;
+//final String small;
+//final String subject_id;
+//final String title;
 //
-//  Trailer.fromParams({this.alt, this.id, this.medium, this.resource_url, this.small, this.subject_id, this.title});
+//  Trailer.fromParams({this.alt="", this.id="", this.medium="", this.resource_url, this.small="", this.subject_id, this.title});
 //
 //  Trailer.fromJson(jsonRes) {
 //    alt = jsonRes['alt'];
@@ -352,303 +212,198 @@ class WriterAvatars {
 //  }
 //
 //  @override
-//  String toString() {
+//final String toString() {
 //    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"medium": ${medium != null?'${json.encode(medium)}':'null'},"resource_url": ${resource_url != null?'${json.encode(resource_url)}':'null'},"small": ${small != null?'${json.encode(small)}':'null'},"subject_id": ${subject_id != null?'${json.encode(subject_id)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'}}';
 //  }
 //}
-
+@JsonSerializable()
+@CopyWith()
 class PopularReview {
+  final String alt;
+  final String id;
+  final String subject_id;
+  final String summary;
+  final String title;
+  final PopularReviewAuthor author;
+  final PopularReviewRating rating;
 
-  String alt;
-  String id;
-  String subject_id;
-  String summary;
-  String title;
-  PopularReviewAuthor author;
-  PopularReviewRating rating;
-
-  PopularReview.fromParams({this.alt, this.id, this.subject_id, this.summary, this.title, this.author, this.rating});
-
-  PopularReview.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    id = jsonRes['id'];
-    subject_id = jsonRes['subject_id'];
-    summary = jsonRes['summary'];
-    title = jsonRes['title'];
-    author = jsonRes['author'] == null ? null : new PopularReviewAuthor.fromJson(jsonRes['author']);
-    rating = jsonRes['rating'] == null ? null : new PopularReviewRating.fromJson(jsonRes['rating']);
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"subject_id": ${subject_id != null?'${json.encode(subject_id)}':'null'},"summary": ${summary != null?'${json.encode(summary)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'},"author": $author,"rating": $rating}';
-  }
+  const PopularReview(
+      {this.alt = "",
+      this.id = "",
+      this.subject_id = '',
+      this.summary = '',
+      this.title = '',
+      this.author = const PopularReviewAuthor(),
+      this.rating = const PopularReviewRating()});
+  factory PopularReview.fromJson(Map<String, dynamic> json) => _$PopularReviewFromJson(json);
+  Map<String, dynamic> toJson() => _$PopularReviewToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class PopularReviewRating {
+  final max;
+  final min;
+  final value;
 
-  var max;
-  var min;
-  var value;
+  const PopularReviewRating({this.max = '', this.min = '', this.value = ''});
 
-  PopularReviewRating.fromParams({this.max, this.min, this.value});
-
-  PopularReviewRating.fromJson(jsonRes) {
-    max = jsonRes['max'];
-    min = jsonRes['min'];
-    value = jsonRes['value'];
-  }
-
-  @override
-  String toString() {
-    return '{"max": $max,"min": $min,"value": $value}';
-  }
+  factory PopularReviewRating.fromJson(Map<String, dynamic> json) => _$PopularReviewRatingFromJson(json);
+  Map<String, dynamic> toJson() => _$PopularReviewRatingToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class PopularReviewAuthor {
+  final String alt;
+  final String avatar;
+  final String id;
+  final String name;
+  final String signature;
+  final String uid;
 
-  String alt;
-  String avatar;
-  String id;
-  String name;
-  String signature;
-  String uid;
+  const PopularReviewAuthor({this.alt = "", this.avatar = "", this.id = "", this.name = "", this.signature = "", this.uid = ""});
 
-  PopularReviewAuthor.fromParams({this.alt, this.avatar, this.id, this.name, this.signature, this.uid});
-
-  PopularReviewAuthor.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    avatar = jsonRes['avatar'];
-    id = jsonRes['id'];
-    name = jsonRes['name'];
-    signature = jsonRes['signature'];
-    uid = jsonRes['uid'];
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"avatar": ${avatar != null?'${json.encode(avatar)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"name": ${name != null?'${json.encode(name)}':'null'},"signature": ${signature != null?'${json.encode(signature)}':'null'},"uid": ${uid != null?'${json.encode(uid)}':'null'}}';
-  }
+  factory PopularReviewAuthor.fromJson(Map<String, dynamic> json) => _$PopularReviewAuthorFromJson(json);
+  Map<String, dynamic> toJson() => _$PopularReviewAuthorToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class PopularComment {
+  final useful_count;
+  final String content;
+  final String created_at;
+  final String id;
+  final String subject_id;
+  final PopularCommentAuthor author;
+  final PopularCommentRating rating;
 
-  var useful_count;
-  String content;
-  String created_at;
-  String id;
-  String subject_id;
-  PopularCommentAuthor author;
-  PopularCommentRating rating;
-
-  PopularComment.fromParams({this.useful_count, this.content, this.created_at, this.id, this.subject_id, this.author, this.rating});
-
-  PopularComment.fromJson(jsonRes) {
-    useful_count = jsonRes['useful_count'];
-    content = jsonRes['content'];
-    created_at = jsonRes['created_at'];
-    id = jsonRes['id'];
-    subject_id = jsonRes['subject_id'];
-    author = jsonRes['author'] == null ? null : new PopularCommentAuthor.fromJson(jsonRes['author']);
-    rating = jsonRes['rating'] == null ? null : new PopularCommentRating.fromJson(jsonRes['rating']);
-  }
-
-  @override
-  String toString() {
-    return '{"useful_count": $useful_count,"content": ${content != null?'${json.encode(content)}':'null'},"created_at": ${created_at != null?'${json.encode(created_at)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"subject_id": ${subject_id != null?'${json.encode(subject_id)}':'null'},"author": $author,"rating": $rating}';
-  }
+  PopularComment(
+      {this.useful_count,
+      this.content = '',
+      this.created_at = '',
+      this.id = '',
+      this.subject_id = '',
+      this.author = const PopularCommentAuthor(),
+      this.rating = const PopularCommentRating()});
+  factory PopularComment.fromJson(Map<String, dynamic> json) => _$PopularCommentFromJson(json);
+  Map<String, dynamic> toJson() => _$PopularCommentToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class PopularCommentRating {
+  final max;
+  final min;
+  final value;
 
-  var max;
-  var min;
-  var value;
-
-  PopularCommentRating.fromParams({this.max, this.min, this.value});
-
-  PopularCommentRating.fromJson(jsonRes) {
-    max = jsonRes['max'];
-    min = jsonRes['min'];
-    value = jsonRes['value'];
-  }
-
-  @override
-  String toString() {
-    return '{"max": $max,"min": $min,"value": $value}';
-  }
+  const PopularCommentRating({this.max, this.min, this.value});
+  factory PopularCommentRating.fromJson(Map<String, dynamic> json) => _$PopularCommentRatingFromJson(json);
+  Map<String, dynamic> toJson() => _$PopularCommentRatingToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class PopularCommentAuthor {
+  final String alt;
+  final String avatar;
+  final String id;
+  final String name;
+  final String signature;
+  final String uid;
 
-  String alt;
-  String avatar;
-  String id;
-  String name;
-  String signature;
-  String uid;
-
-  PopularCommentAuthor.fromParams({this.alt, this.avatar, this.id, this.name, this.signature, this.uid});
-
-  PopularCommentAuthor.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    avatar = jsonRes['avatar'];
-    id = jsonRes['id'];
-    name = jsonRes['name'];
-    signature = jsonRes['signature'];
-    uid = jsonRes['uid'];
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"avatar": ${avatar != null?'${json.encode(avatar)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"name": ${name != null?'${json.encode(name)}':'null'},"signature": ${signature != null?'${json.encode(signature)}':'null'},"uid": ${uid != null?'${json.encode(uid)}':'null'}}';
-  }
+  const PopularCommentAuthor({this.alt = '', this.avatar = '', this.id = '', this.name = '', this.signature = '', this.uid = ''});
+  factory PopularCommentAuthor.fromJson(Map<String, dynamic> json) => _$PopularCommentAuthorFromJson(json);
+  Map<String, dynamic> toJson() => _$PopularCommentAuthorToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Photo {
+  final String alt;
+  final String cover;
+  final String icon;
+  final String id;
+  final String image;
+  final String thumb;
 
-  String alt;
-  String cover;
-  String icon;
-  String id;
-  String image;
-  String thumb;
-
-  Photo.fromParams({this.alt, this.cover, this.icon, this.id, this.image, this.thumb});
-
-  Photo.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    cover = jsonRes['cover'];
-    icon = jsonRes['icon'];
-    id = jsonRes['id'];
-    image = jsonRes['image'];
-    thumb = jsonRes['thumb'];
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"cover": ${cover != null?'${json.encode(cover)}':'null'},"icon": ${icon != null?'${json.encode(icon)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"image": ${image != null?'${json.encode(image)}':'null'},"thumb": ${thumb != null?'${json.encode(thumb)}':'null'}}';
-  }
+  Photo({this.alt = '', this.cover = '', this.icon = '', this.id = '', this.image = '', this.thumb = ''});
+  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
+  Map<String, dynamic> toJson() => _$PhotoToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Director {
-
-  String alt;
-  String id;
-  String name;
-  String name_en;
+  final String alt;
+  final String id;
+  final String name;
+  final String name_en;
   DirectorAvatars avatars;
 
-  Director.fromParams({this.alt, this.id, this.name, this.name_en, this.avatars});
+  Director({this.alt = '', this.id = '', this.name = '', this.name_en = '', this.avatars = const DirectorAvatars()});
 
-  Director.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    id = jsonRes['id'];
-    name = jsonRes['name'];
-    name_en = jsonRes['name_en'];
-    avatars = jsonRes['avatars'] == null ? null : new DirectorAvatars.fromJson(jsonRes['avatars']);
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"name": ${name != null?'${json.encode(name)}':'null'},"name_en": ${name_en != null?'${json.encode(name_en)}':'null'},"avatars": $avatars}';
-  }
+  factory Director.fromJson(Map<String, dynamic> json) => _$DirectorFromJson(json);
+  Map<String, dynamic> toJson() => _$DirectorToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class DirectorAvatars {
+  final String large;
+  final String medium;
+  final String small;
 
-  String large;
-  String medium;
-  String small;
-
-  DirectorAvatars.fromParams({this.large, this.medium, this.small});
-
-  DirectorAvatars.fromJson(jsonRes) {
-    large = jsonRes['large'];
-    medium = jsonRes['medium'];
-    small = jsonRes['small'];
-  }
-
-  @override
-  String toString() {
-    return '{"large": ${large != null?'${json.encode(large)}':'null'},"medium": ${medium != null?'${json.encode(medium)}':'null'},"small": ${small != null?'${json.encode(small)}':'null'}}';
-  }
+  const DirectorAvatars({this.large = '', this.medium = '', this.small = ''});
+  factory DirectorAvatars.fromJson(Map<String, dynamic> json) => _$DirectorAvatarsFromJson(json);
+  Map<String, dynamic> toJson() => _$DirectorAvatarsToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Cast {
+  final String alt;
+  final String id;
+  final String name;
+  final String name_en;
+  final CastAvatars avatars;
 
-  String alt;
-  String id;
-  String name;
-  String name_en;
-  CastAvatars avatars;
+  const Cast({this.alt = '', this.id = '', this.name = '', this.name_en = '', this.avatars = const CastAvatars()});
 
-  Cast.fromParams({this.alt, this.id, this.name, this.name_en, this.avatars});
-
-  Cast.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    id = jsonRes['id'];
-    name = jsonRes['name'];
-    name_en = jsonRes['name_en'];
-    avatars = jsonRes['avatars'] == null ? null : new CastAvatars.fromJson(jsonRes['avatars']);
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"name": ${name != null?'${json.encode(name)}':'null'},"name_en": ${name_en != null?'${json.encode(name_en)}':'null'},"avatars": $avatars}';
-  }
+  factory Cast.fromJson(Map<String, dynamic> json) => _$CastFromJson(json);
+  Map<String, dynamic> toJson() => _$CastToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class CastAvatars {
+  final String large;
+  final String medium;
+  final String small;
 
-  String large;
-  String medium;
-  String small;
+  const CastAvatars({this.large = '', this.medium = '', this.small = ''});
 
-  CastAvatars.fromParams({this.large, this.medium, this.small});
-
-  CastAvatars.fromJson(jsonRes) {
-    large = jsonRes['large'];
-    medium = jsonRes['medium'];
-    small = jsonRes['small'];
-  }
-
-  @override
-  String toString() {
-    return '{"large": ${large != null?'${json.encode(large)}':'null'},"medium": ${medium != null?'${json.encode(medium)}':'null'},"small": ${small != null?'${json.encode(small)}':'null'}}';
-  }
+  factory CastAvatars.fromJson(Map<String, dynamic> json) => _$CastAvatarsFromJson(json);
+  Map<String, dynamic> toJson() => _$CastAvatarsToJson(this);
 }
 
+@JsonSerializable()
+@CopyWith()
 class Blooper {
+  final String alt;
+  final String id;
+  final String medium;
+  final String resource_url;
+  final String small;
+  final String subject_id;
+  final String title;
 
-  String alt;
-  String id;
-  String medium;
-  String resource_url;
-  String small;
-  String subject_id;
-  String title;
+  const Blooper({this.alt = '', this.id = '', this.medium = '', this.resource_url = '', this.small = '', this.subject_id = '', this.title = ''});
 
-  Blooper.fromParams({this.alt, this.id, this.medium, this.resource_url, this.small, this.subject_id, this.title});
-
-  Blooper.fromJson(jsonRes) {
-    alt = jsonRes['alt'];
-    id = jsonRes['id'];
-    medium = jsonRes['medium'];
-    resource_url = jsonRes['resource_url'];
-    small = jsonRes['small'];
-    subject_id = jsonRes['subject_id'];
-    title = jsonRes['title'];
-  }
-
-  @override
-  String toString() {
-    return '{"alt": ${alt != null?'${json.encode(alt)}':'null'},"id": ${id != null?'${json.encode(id)}':'null'},"medium": ${medium != null?'${json.encode(medium)}':'null'},"resource_url": ${resource_url != null?'${json.encode(resource_url)}':'null'},"small": ${small != null?'${json.encode(small)}':'null'},"subject_id": ${subject_id != null?'${json.encode(subject_id)}':'null'},"title": ${title != null?'${json.encode(title)}':'null'}}';
-  }
+  factory Blooper.fromJson(Map<String, dynamic> json) => _$BlooperFromJson(json);
+  Map<String, dynamic> toJson() => _$BlooperToJson(this);
 }
-
-
-
 
 //{
 //"rating":{

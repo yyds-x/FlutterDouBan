@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:doubanapp/bean/subject_entity.dart';
-import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
+import 'package:flutter/material.dart';
+
 import '../../constant/constant.dart';
+
 ///影院热映、即将上映
 class HotSoonMovieWidget extends StatefulWidget {
   final state = _HotSoonMovieWidgetState();
@@ -17,25 +18,23 @@ class HotSoonMovieWidget extends StatefulWidget {
   }
 }
 
-TabController _tabController;
+late TabController _tabController;
 var movieCount = 16;
 
-class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget>
-    with SingleTickerProviderStateMixin {
-  Color selectColor, unselectedColor;
-  TextStyle selectStyle, unselectedStyle;
-  Widget tabBar;
+class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget> with SingleTickerProviderStateMixin {
+  late Color selectColor, unselectedColor;
+  late TextStyle selectStyle, unselectedStyle;
+  late Widget tabBar;
   double childAspectRatio = 355.0 / 506.0;
   var hotCount, soonCount; //热映数量、即将上映数量、
-  List<Subject> hotMovieBeans, soonMovieBeans;
+  List<Subject> hotMovieBeans = [], soonMovieBeans = [];
 
   @override
   void initState() {
     super.initState();
     selectColor = Color.fromARGB(255, 45, 45, 45);
     unselectedColor = Color.fromARGB(255, 135, 135, 135);
-    selectStyle = TextStyle(
-        fontSize: 20, color: selectColor, fontWeight: FontWeight.bold);
+    selectStyle = TextStyle(fontSize: 20, color: selectColor, fontWeight: FontWeight.bold);
     unselectedStyle = TextStyle(fontSize: 20, color: unselectedColor);
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(listener);
@@ -96,10 +95,7 @@ class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget>
             ),
             Text(
               '全部 $movieCount > ',
-              style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),
             )
           ],
         ),

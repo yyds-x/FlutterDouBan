@@ -1,26 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:doubanapp/constant/constant.dart';
+import 'package:flutter/material.dart';
 
 typedef OnTabBack = void Function();
 
 ///导航头，如果设置了body，则不用再次使用Scaffold
 class TitleBar extends StatelessWidget {
-  final String title;
+  final String? title;
   final Color backgroundColor;
-  final Color textColor;
-  final Widget body;
-  final OnTabBack onTabBack;
-  final EdgeInsetsGeometry padding;
+  final Color? textColor;
+  final Widget? body;
+  final OnTabBack? onTabBack;
+  final EdgeInsetsGeometry? padding;
 
-  TitleBar(
-      {Key key,
-      this.title,
-      this.backgroundColor = Colors.white,
-      this.textColor,
-      this.onTabBack,
-      this.padding,
-      this.body})
-      : super(key: key);
+  TitleBar({Key? key, this.title, this.backgroundColor = Colors.white, this.textColor, this.onTabBack, this.padding, this.body}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +59,7 @@ class TitleBar extends StatelessWidget {
               if (onTabBack == null) {
                 Navigator.of(context).pop();
               } else {
-                onTabBack();
+                onTabBack!();
               }
             },
           ),
@@ -75,7 +67,7 @@ class TitleBar extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: Text(
-            title == null ? '' : title,
+            title == null ? '' : title!,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         )

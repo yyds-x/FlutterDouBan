@@ -5,7 +5,7 @@ class LaminatedImage extends StatelessWidget {
   final urls;
   final w;
 
-  LaminatedImage({Key key, @required this.urls, this.w}) : super(key: key);
+  LaminatedImage({Key? key, required this.urls, this.w}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

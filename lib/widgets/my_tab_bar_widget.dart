@@ -1,19 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:doubanapp/pages/douya_top_250_list_widget.dart';
 import 'package:doubanapp/pages/movie/movie_page.dart';
+import 'package:flutter/material.dart';
 
 class FlutterTabBarView extends StatelessWidget {
   final TabController tabController;
 
-  FlutterTabBarView({Key key, @required this.tabController}) : super(key: key);
+  FlutterTabBarView({Key? key, required this.tabController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print('build FlutterTabBarView');
     var viewList = [
-      MoviePage(key: PageStorageKey<String>('MoviePage'),),
+      MoviePage(
+        key: PageStorageKey<String>('MoviePage'),
+      ),
       Page2(),
-      DouBanListView(key: PageStorageKey<String>('DouBanListView'),),
+      DouBanListView(
+        key: PageStorageKey<String>('DouBanListView'),
+      ),
       Page4(),
       Page5(),
       Page1(),

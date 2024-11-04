@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:doubanapp/widgets/title_bar.dart';
-import 'package:doubanapp/router.dart';
 
 class PhotoHeroPage extends StatelessWidget {
-  final String photoUrl;
-  final double width;
+  final String? photoUrl;
+  final double? width;
 
-  PhotoHeroPage({Key key, this.photoUrl, this.width}) : super(key: key);
+  PhotoHeroPage({Key? key, this.photoUrl, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +12,8 @@ class PhotoHeroPage extends StatelessWidget {
       color: Colors.transparent,
       alignment: Alignment.center,
       child: _PhotoHero(
-        photoUrl: photoUrl,
-        width: width,
+        photoUrl: photoUrl!,
+        width: width!,
         onTap: () {
           Navigator.of(context).pop();
         },
@@ -25,23 +23,22 @@ class PhotoHeroPage extends StatelessWidget {
 }
 
 class _PhotoHero extends StatelessWidget {
-  const _PhotoHero({Key key, this.photoUrl, this.onTap, this.width})
-      : super(key: key);
-  final double width;
-  final String photoUrl;
-  final VoidCallback onTap;
+  const _PhotoHero({Key? key, this.photoUrl, this.onTap, this.width}) : super(key: key);
+  final double? width;
+  final String? photoUrl;
+  final VoidCallback? onTap;
 
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       child: Hero(
-        tag: photoUrl,
+        tag: photoUrl!,
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
             child: Image.network(
-              photoUrl,
+              photoUrl!,
               fit: BoxFit.contain,
             ),
           ),
@@ -52,9 +49,9 @@ class _PhotoHero extends StatelessWidget {
 }
 //
 //class HeroAnimation extends StatelessWidget {
-//  final String url;
+//  final String  url;
 //
-//  HeroAnimation(this.url, {Key key}) : super(key: key);
+//  HeroAnimation(this.url, {Key? key}) : super(key: key);
 //
 //  Widget build(BuildContext context) {
 //    return Scaffold(
@@ -75,10 +72,10 @@ class _PhotoHero extends StatelessWidget {
 //}
 //
 //class PhotoHero extends StatelessWidget {
-//  const PhotoHero({Key key, this.photo, this.onTap, this.width})
+//  const PhotoHero({Key? key, this.photo, this.onTap, this.width})
 //      : super(key: key);
 //
-//  final String photo;
+//  final String  photo;
 //  final VoidCallback onTap;
 //  final double width;
 //

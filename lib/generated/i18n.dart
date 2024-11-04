@@ -11,14 +11,36 @@ import 'package:flutter/material.dart';
 class S implements WidgetsLocalizations {
   const S();
 
-  static const GeneratedLocalizationsDelegate delegate =
-    GeneratedLocalizationsDelegate();
+  static const GeneratedLocalizationsDelegate delegate = GeneratedLocalizationsDelegate();
 
-  static S of(BuildContext context) => Localizations.of<S>(context, S);
+  static S? of(BuildContext context) => Localizations.of<S>(context, S);
 
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  @override
+  // TODO: implement reorderItemDown
+  String get reorderItemDown => throw UnimplementedError();
+
+  @override
+  // TODO: implement reorderItemLeft
+  String get reorderItemLeft => throw UnimplementedError();
+
+  @override
+  // TODO: implement reorderItemRight
+  String get reorderItemRight => throw UnimplementedError();
+
+  @override
+  // TODO: implement reorderItemToEnd
+  String get reorderItemToEnd => throw UnimplementedError();
+
+  @override
+  // TODO: implement reorderItemToStart
+  String get reorderItemToStart => throw UnimplementedError();
+
+  @override
+  // TODO: implement reorderItemUp
+  String get reorderItemUp => throw UnimplementedError();
 }
 
 class $en extends S {
@@ -34,7 +56,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
     ];
   }
 
-  LocaleListResolutionCallback listResolution({Locale fallback}) {
+  Locale Function(List<Locale> locales, Iterable<Locale> supported) listResolution({Locale? fallback}) {
     return (List<Locale> locales, Iterable<Locale> supported) {
       if (locales == null || locales.isEmpty) {
         return fallback ?? supported.first;
@@ -44,13 +66,13 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
     };
   }
 
-  LocaleResolutionCallback resolution({Locale fallback}) {
+  Locale Function(Locale locale, Iterable<Locale> supported) resolution({Locale? fallback}) {
     return (Locale locale, Iterable<Locale> supported) {
       return _resolve(locale, fallback, supported);
     };
   }
 
-  Locale _resolve(Locale locale, Locale fallback, Iterable<Locale> supported) {
+  Locale _resolve(Locale locale, Locale? fallback, Iterable<Locale> supported) {
     if (locale == null || !isSupported(locale)) {
       return fallback ?? supported.first;
     }
@@ -68,28 +90,27 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
 
   @override
   Future<S> load(Locale locale) {
-    final String lang = getLang(locale);
+    final String? lang = getLang(locale);
     if (lang != null) {
       switch (lang) {
         case "en":
           return SynchronousFuture<S>(const $en());
         default:
-          // NO-OP.
+        // NO-OP.
       }
     }
     return SynchronousFuture<S>(const S());
   }
 
   @override
-  bool isSupported(Locale locale) =>
-    locale != null && supportedLocales.contains(locale);
+  bool isSupported(Locale? locale) => locale != null && supportedLocales.contains(locale);
 
   @override
   bool shouldReload(GeneratedLocalizationsDelegate old) => false;
 }
 
-String getLang(Locale l) => l == null
-  ? null
-  : l.countryCode != null && l.countryCode.isEmpty
-    ? l.languageCode
-    : l.toString();
+String? getLang(Locale? l) => l == null
+    ? null
+    : l.countryCode != null && l.countryCode!.isEmpty
+        ? l.languageCode
+        : l.toString();

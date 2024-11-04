@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 typedef VoidCallback = void Function();
 
@@ -8,16 +7,11 @@ class LookConfirmButton extends StatefulWidget {
   final String btnText;
   final String iconAsset;
   final Color pressedColor;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color defaultColor;
 
   LookConfirmButton(
-      {Key key,
-      @required this.btnText,
-      @required this.iconAsset,
-      @required this.pressedColor,
-      @required this.defaultColor,
-      this.onPressed})
+      {Key? key, required this.btnText, required this.iconAsset, required this.pressedColor, required this.defaultColor, this.onPressed})
       : super(key: key);
 
   @override
@@ -27,8 +21,8 @@ class LookConfirmButton extends StatefulWidget {
 }
 
 class _State extends State<LookConfirmButton> {
-  var _color;
-  Color _defaultColor;
+  late var _color;
+  late Color _defaultColor;
 
   _State(Color color) {
     _color = color;
@@ -41,9 +35,7 @@ class _State extends State<LookConfirmButton> {
       child: Container(
         alignment: Alignment.center,
         height: 35.0,
-        decoration: BoxDecoration(
-            color: _color,
-            borderRadius: BorderRadius.all(Radius.circular(5.0))),
+        decoration: BoxDecoration(color: _color, borderRadius: BorderRadius.all(Radius.circular(5.0))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -64,7 +56,7 @@ class _State extends State<LookConfirmButton> {
       ),
       onTap: () {
         if (widget.onPressed != null) {
-          widget.onPressed();
+          widget.onPressed!();
         }
       },
       onTapDown: (TapDownDetails details) {
@@ -77,7 +69,7 @@ class _State extends State<LookConfirmButton> {
           _color = _defaultColor;
         });
       },
-      onTapCancel: ((){
+      onTapCancel: (() {
         setState(() {
           _color = _defaultColor;
         });
